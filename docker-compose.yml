@@ -1,0 +1,58 @@
+version: "3.9"  # optional since v1.27.0
+services:
+#  s3:
+#    platform: linux/amd64
+#    image: minio/minio
+#    container_name: minio
+#    ports:
+#      - "9000:9000"
+#    volumes:
+#      - ./storage/minio:/data
+#    environment:
+#      MINIO_ACCESS_KEY: minio_access_key
+#      MINIO_SECRET_KEY: minio_secret_key
+#    command: server /data
+  db:
+    platform: linux/amd64
+    image: mysql:8.0.27
+    container_name: mysql_db
+    command: --authentication_policy=mysql_native_password #'default_authentication_plugin' is deprecated and will be removed in a future release.
+    restart: unless-stopped
+    environment:
+        MYSQL_DATABASE: mySite
+        MYSQL_USER: filatov
+        MYSQL_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: strong-password
+        TZ: Europe/Kiev
+    ports: [ '3306:3306' ]
+    volumes:
+      - ./database:/var/lib/mysql
+  backend:
+    platform: linux/amd64
+    container_name: backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - 5001:5001
+    depends_on:
+      - db
+    environment:
+      TZ: Europe/Kiev
+    volumes:
+      - './backend:/app'
+      - '/app/node_modules'
+    command: sh -c 'npm run db:migrate && npm run nodemon'
+#  frontend:
+#     platform: linux/amd64
+#     container_name: frontend
+#     build:
+#       context: ./frontend
+#       dockerfile: Dockerfile
+#     volumes:
+#       - './frontend/:/app'
+#       - '/app/node_modules'
+#     ports:
+#       - 3000:3000
+#     environment:
+#       - CHOKIDAR_USEPOLLING=true
