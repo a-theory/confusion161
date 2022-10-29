@@ -15,7 +15,7 @@ function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(sendCreate({name, brief, navigate: navigate, token: users.token}));
+        dispatch(sendCreate({name, brief, navigate: navigate, accessToken: users.accessToken}));
     };
 
     const onChangeName = (e) => setName(e.target.value);
@@ -29,7 +29,14 @@ function Create() {
                 <CustomInput onChange={onChangeBrief} required placeholder={'brief'}/>
                 <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
             </form>
-            <Link to={"/create"} style={{color: "white"}}>Create article</Link>
+            <div>
+                <Link to={"/create"} style={{color: "white", padding:10}}>
+                    Create article
+                </Link>
+                <Link to={"/upload-image"} style={{color: "white", padding:10}}>
+                    upload image
+                </Link>
+            </div>
         </div>
     )
 }

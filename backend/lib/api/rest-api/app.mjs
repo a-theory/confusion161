@@ -6,11 +6,19 @@ import bluebird    from 'bluebird';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import adminRotes    from './admin/router.mjs';
-import * as url from 'url';
 import path from "path";
 import helmet from "helmet";
+import winston from 'winston';
 
-const __dirname = url.fileURLToPath(new URL('.', import.meta.url));
+const logger = winston.createLogger({
+    level: 'info',
+    format: winston.format.json(),
+    defaultMeta: { service: 'user-service' },
+    transports: [
+        new winston.transports.File({ filename: './log/error.log', level: 'error' }),
+        new winston.transports.File({ filename: './log/combined.log' }),
+    ],
+});
 
 const promisify = bluebird.promisifyAll;
 
@@ -23,6 +31,7 @@ export function init({ sequelize }) {
     app.use(express.static('public'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
+    app.use(express.json());
     app.use(helmet());
 
     app.use('/storage', express.static('storage'));
@@ -39,6 +48,12 @@ export function start({ appPort, secure }) {
     });
 
     server.closeAsync = promisify(server.close);
+
+    if (secure) {
+        logger.add(new winston.transports.Console({
+            format: winston.format.simple(),
+        }));
+    }
 }
 
 export async function stop() {

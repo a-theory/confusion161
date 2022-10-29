@@ -10,12 +10,24 @@ export async function initMinio(){
     });
 
     await minioClient.bucketExists('mysite', function(err, exists) {
+        if (!exists) {
+            minioClient.makeBucket('mysite', (err) => {
+                if (err) {
+                    console.log('minio error '+err);
+                }
+            });
+        }
         if (err) {
             return console.log(err)
         }
+    });
 
+    await minioClient.bucketExists('mysiteimages', function(err, exists) {
+        if (err) {
+            return console.log(err)
+        }
         if (!exists) {
-            minioClient.makeBucket('mysite', (err) => {
+            minioClient.makeBucket('mysiteimages', (err) => {
                 if (err) {
                     console.log('minio error '+err);
                 }

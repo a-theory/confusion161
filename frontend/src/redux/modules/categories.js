@@ -34,7 +34,7 @@ export const sendCreate = createAsyncThunk(
             if (!param) return null;
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
             const res = await axios.post(`/categories`, param, header);
@@ -54,7 +54,7 @@ export const sendDelete = createAsyncThunk(
             if (!param.id) return null;
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
             await axios.delete(`/categories/${param.id}`, header);

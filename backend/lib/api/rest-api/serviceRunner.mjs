@@ -35,7 +35,7 @@ async function validateJwt(req, res) {
     try {
         const token = getToken(req);
 
-        const userData = await jwt.verify(token, config.tokenLoginKey);
+        const userData = await jwt.verify(token, config.accessTokenKey);
 
         const user = await User.findByPk(userData.id);
 

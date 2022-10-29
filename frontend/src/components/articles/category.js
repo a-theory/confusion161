@@ -22,16 +22,14 @@ let styles = {
     Li: {
         borderBottom: "1px dashed white",
         borderTop: "1px dashed white",
-        padding: 10,
-        width: "100%",
         transitionDuration: "100ms",
         borderCollapse: "collapse",
-        marginLeft: "10%",
     },
     Link: {
         fontFamily: "Gill Sans\", sans-serif",
         color: "#ad841c",
         transitionDuration: "1s",
+        textTransform: "none"
     },
     BorderText: {
         // fontFamily: "Gill Sans\", sans-serif",
@@ -47,6 +45,13 @@ let styles = {
         transitionDuration: "100ms",
         borderCollapse: "collapse",
         width: "100%"
+    },
+    Date: {
+        width:"10%",
+        padding: "10px",
+        border: "1px solid gray",
+        color: "#7e92e5",
+        textAlign: "center"
     }
 }
 
@@ -82,28 +87,34 @@ function Home() {
                     <tbody>
                         {categories.category?.Articles.map(i => (
                             <tr key={i.id}>
-                                <td style={{width:"10%", border: "1px solid gray"}}>
-                                    {users.token &&
+                                {users.accessToken &&
+                                    <td style={{width: "10%", border: "1px solid gray"}}>
                                         <Button fullWidth
                                                 color="secondary"
-                                                onClick={()=>{
-                                                    dispatch(sendDelete(i.id))
+                                                onClick={() => {
+                                                    dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
                                                 }}
                                         >
                                             Delete
                                         </Button>
-                                    }
-                                </td>
+                                    </td>
+                                }
                                 <td style={styles.Li}>
-                                    <Link
-                                        to={`/articles/${i.id}`}
+                                    <Button
+                                        fullWidth
+                                        onClick={()=>{navigate(`/articles/${i.id}`)}}
                                         style={styles.Link}
                                         onMouseEnter={changeBackground}
                                         onMouseLeave={changeBackgroundBack}
                                     >
                                         {i.name}
-                                    </Link>
-                                    <cite style={{color:"gray"}}> ({i.brief})</cite>
+                                    </Button>
+                                </td>
+                                <td style={{width:"30%", border: "1px solid gray"}}>
+                                    <cite style={{padding:10}}>{i.brief}</cite>
+                                </td>
+                                <td style={styles.Date}>
+                                    {(new Date(i.createdAt)).toLocaleDateString()}
                                 </td>
                             </tr>
                         ))}

@@ -27,7 +27,7 @@ export default class Create extends Base {
         const minioClient = await initMinio();
 
         const originalname = file.originalname.split(' ');
-        const fileName = originalname.join('_');
+        const fileName = `${new Date().getTime()}-${originalname.join('_')}`;
 
         await minioClient.putObject('mysite', fileName, file.buffer);
         const url = await minioClient.presignedGetObject('mysite', fileName);

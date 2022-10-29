@@ -2,15 +2,16 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
-import {Button} from "@mui/material";
+import {Button, ButtonBase} from "@mui/material";
 import {sendDelete} from "../../redux/modules/categories";
 
 let styles = {
     Title: {
         textAlign: "left",
-        // fontFamily: "OldEnglish",
-        fontSize: "30px",
+        fontSize: "40px",
         marginLeft: "5%",
+        fontFamily: "Entanglement",
+        color: "#7e92e5"
     },
     SimpleOld: {
         marginTop: "5%",
@@ -20,6 +21,7 @@ let styles = {
         textAlign: "left",
     },
     Email: {
+        fontFamily: "OldEnglish",
         marginLeft: "5%",
         color: "#37561d",
         fontSize: "20px",
@@ -37,16 +39,16 @@ let styles = {
         // position: "relative",
         borderBottom: "1px dashed white",
         borderTop: "1px dashed white",
-        padding: 10,
-        width: "100%",
+        width: "60%",
         transitionDuration: "100ms",
         borderCollapse: "collapse",
-        marginLeft: "10%",
     },
     Link: {
         fontFamily: "Gill Sans\", sans-serif",
         color: "#ad841c",
         transitionDuration: "1s",
+        textAlign: "left",
+        textTransform: "none"
     },
     BorderText: {
         // fontFamily: "Gill Sans\", sans-serif",
@@ -69,7 +71,6 @@ let styles = {
         width: "100%",
         position: "absolute",
         // right: "5%",
-
     }
 }
 
@@ -77,6 +78,7 @@ function Home() {
     const categories = useSelector(state => state.categories);
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     useEffect(() => {
         if (categories.status === 'idle'){
@@ -95,7 +97,7 @@ function Home() {
 
     return (
         <div>
-            <div style={styles.Title}>C�nui{"\f"}on�61</div>
+            <div style={styles.Title}>Confusion161</div>
             <Link style={styles.Email} to={"getGpg"}>
                 gpg only
             </Link>
@@ -106,11 +108,11 @@ function Home() {
                 <p style={{color: "#a22929"}}>Key Words:</p>
                 <div style={{width: "80%"}}>
                     [
-                    [<p style={styles.BorderText}>information</p>],
+                    [<p style={styles.BorderText}>security</p>],
                     [<p style={styles.BorderText}>cyber world</p>],
                     [<p style={styles.BorderText}>information technologies</p>],
-                    [<p style={styles.BorderText}>safe your time</p>],
-                    [<p style={styles.BorderText}>news</p>]
+                    [<p style={styles.BorderText}>news</p>],
+                    [<p style={styles.BorderText}>law</p>]
                     ]
                 </div>
             </div>
@@ -122,24 +124,29 @@ function Home() {
                     <tbody>
                         {categories.categories.map(i => (
                             <tr  key={i.id}>
-                                <td style={{width:"10%", border: "1px solid gray"}}>
-                                    {users.token &&
+                                {users.accessToken &&
+                                    <td style={{width:"10%", border: "1px solid gray"}}>
                                         <Button fullWidth color="secondary"
                                                 onClick={()=>{
-                                                    dispatch(sendDelete({id: i.id, token: users.token}))
+                                                    dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
                                                 }}
                                         >
                                             Delete
                                         </Button>
-                                    }
-                                </td>
+                                    </td>
+                                }
                                 <td style={styles.Li}>
-                                    <Link to={`/categories/${i.id}`} style={styles.Link}
-                                          onMouseEnter={changeBackground}
-                                          onMouseLeave={changeBackgroundBack}
+                                    <Button onClick={()=>{navigate(`/categories/${i.id}`)}}
+                                                style={styles.Link}
+                                                onMouseEnter={changeBackground}
+                                                onMouseLeave={changeBackgroundBack}
+                                                fullWidth
                                     >
                                         {i.name}
-                                    </Link><cite style={{color:"gray"}}> ({i.brief})</cite>
+                                    </Button>
+                                </td>
+                                <td style={{width:"30%", border: "1px solid gray"}}>
+                                    <cite style={{padding:10}}> ({i.brief})</cite>
                                 </td>
                             </tr>
                         ))}

@@ -13,7 +13,6 @@ import {
     useScrollTrigger,
 } from "@mui/material";
 import {Home, Create} from "@mui/icons-material"
-import {parseToken} from '../../utils/parseToken';
 import PropTypes from 'prop-types';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Zoom from '@mui/material/Zoom';
@@ -62,7 +61,7 @@ export default function ToolbarMain(props) {
     const path = window.location.pathname.search("article") !== -1
 
     const log_out = () => {
-        if (users.token){
+        if (users.accessToken){
             dispatch(logOut())
         } else {
             navigate("/login")
@@ -77,12 +76,12 @@ export default function ToolbarMain(props) {
                         <Link style={styleToolbar.Link} to={"/"}>
                             Home
                         </Link>
-                        {users.token &&
+                        {users.accessToken &&
                             <Link style={styleToolbar.Link} to={"/create"}>
                                 Create
                             </Link>
                         }
-                        {users.token &&
+                        {users.accessToken &&
                             <Link style={styleToolbar.Link} to={"/users"}>
                                 TM
                             </Link>

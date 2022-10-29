@@ -1,6 +1,5 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from "../utils/axios";
-import {parseToken} from "../../utils/parseToken";
 import { toast } from 'react-toastify';
 
 export const sendGetUser = createAsyncThunk(
@@ -21,25 +20,19 @@ export const sendLogin = createAsyncThunk(
     async (param, thunkAPI) => {
         try {
             const res = await axios.post(`/login`, param.user);
-            console.log(res);
             if (res?.data?.status) {
-                console.log(121);
-                param.navigate("/")
-                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('accessToken', res.data.accessToken)
+                localStorage.setItem('refreshToken', res.data.refreshToken)
                 toast.success("Log in");
+                param.navigate("/")
                 return {
-                    token: localStorage.getItem('token'),
+                    accessToken: localStorage.getItem('accessToken'),
+                    refreshToken: localStorage.getItem('refreshToken'),
                     user: res.data.user,
                     error: null,
                 };
             } else {
-                const codes = {
-                    TOO_SHORT: 'Password too short'
-                }
 
-                if (res.data.error.code === 'FORMAT_ERROR') {
-                    toast.error(codes[res.data.error.fields.password]);
-                }
             }
         } catch (err) {
             console.log(err.response.data.error)
@@ -79,7 +72,7 @@ export const sendGetRequests = createAsyncThunk(
         try {
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
             const res = await axios.get(`/users/requests`, header);
@@ -96,7 +89,7 @@ export const sendGetUsers = createAsyncThunk(
         try {
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
             const res = await axios.get(`/users`, header);
@@ -114,7 +107,7 @@ export const sendDelete = createAsyncThunk(
             if (!param.id) return null;
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
             await axios.delete(`/users/${param.id}`, header);
@@ -133,12 +126,29 @@ export const sendEmailVerify = createAsyncThunk(
             if (!param.id) return null;
             let header = {
                 headers: {
-                    Authorization: `Bearer ${param.token}`,
+                    Authorization: `Bearer ${param.accessToken}`,
                 }
             }
-            console.log({token: param.token})
+            console.log({accessToken: param.accessToken})
             await axios.patch(`/users/${param.id}`, {}, header);
             window.location.reload(false);
+            return {};
+        } catch (err) {
+            toast.error(err.response.data.error);
+        }
+    }
+)
+
+export const sendRefreshToken = createAsyncThunk(
+    'users/sendRefreshToken',
+    async (param, thunkAPI) => {
+        try {
+            let header = {
+                headers: {
+                    Authorization: `Bearer ${param.refreshToken}`,
+                }
+            }
+            await axios.patch(`/refresh`, {}, header);
             return {};
         } catch (err) {
             toast.error(err.response.data.error);
@@ -150,7 +160,8 @@ const initialState = {
     error: null,
     success: null,
     status: 'idle',
-    token: localStorage.getItem('token'),
+    accessToken: localStorage.getItem('accessToken'),
+    refreshToken: localStorage.getItem('refreshToken'),
     gpg: null,
     user: null,
     count: 1,
@@ -163,26 +174,20 @@ const slice = createSlice({
     reducers: {
         logOut: (state, action) => {
             state.user = null;
-            state.token = null;
+            state.accessToken = null;
+            state.refreshToken = null;
             toast.success("Log out");
-            localStorage.removeItem('token');
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
         },
     },
     extraReducers: (builder) => {
         builder.addCase(sendGetUser.fulfilled, (state, action) => {
-            const token = parseToken(state.token);
-            if (Date.now() >= token.exp * 1000){
-                state.user = null;
-                state.users = [];
-                state.specUser = null;
-                state.token = null;
-                localStorage.removeItem('token');
-            } else {
-                state.user = action.payload;
-            }
+            state.user = action.payload;
         })
         builder.addCase(sendLogin.fulfilled, (state, action) => {
-            state.token = action.payload.token;
+            state.accessToken = action.payload.accessToken;
+            state.refreshToken = action.payload.refreshToken;
             state.user = action.payload.user;
         })
         builder.addCase(sendGetGpg.fulfilled, (state, action) => {

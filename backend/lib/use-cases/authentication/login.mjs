@@ -8,7 +8,7 @@ export default class login extends Base {
     async validate(data = {}) {
         const rules = {
             email   	: [	'required', 'email', { min_length: 3, max_length: 255 } ],
-            password	: [	'required', 'string', { min_length: 8, max_length: 20 } ]
+            password	: [	'required', 'string', { min_length: 8, max_length: 20 } ],
         };
 
         return this.doValidation(data, rules);
@@ -28,11 +28,17 @@ export default class login extends Base {
             throw errors;
         }
 
-        const token = await jwt.sign(
+        const accessToken = await jwt.sign(
             { id: user.id },
-            config.tokenLoginKey, { expiresIn: '7d' }
+            config.accessTokenKey,
+            { expiresIn: '10m' }
         );
 
-        return { user, token };
+        const refreshToken = await jwt.sign(
+            { id: user.id },
+            config.refreshTokenKey, { expiresIn: '1d' }
+        );
+
+        return { user, accessToken, refreshToken };
     }
 }

@@ -36,7 +36,7 @@ function Create() {
             brief,
             file: pdf,
             navigate: navigate,
-            token: users.token
+            accessToken: users.accessToken
         }));
     };
 
@@ -88,9 +88,14 @@ function Create() {
                 />
                 <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
             </form>
-            <Link to={"/create-category"} style={{color: "white"}}>
-                Create category
-            </Link>
+            <div>
+                <Link to={"/create-category"} style={{color: "white", padding:10}}>
+                    Create category
+                </Link>
+                <Link to={"/upload-image"} style={{color: "white", padding:10}}>
+                    upload image
+                </Link>
+            </div>
         </div>
     )
 }

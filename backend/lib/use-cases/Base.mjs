@@ -25,7 +25,9 @@ export default class UseCaseBase {
 
             let cleanParams = args;
 
-            if (this?.validate) cleanParams = await this.validate(args);
+            if (this?.validate) {
+                cleanParams = await this.validate(args);
+            }
 
             result = this.execute(cleanParams);
 

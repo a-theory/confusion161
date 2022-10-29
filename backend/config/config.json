@@ -5,5 +5,6 @@
     "adminUrl": "http://localhost:8080",
     "https" : true,
 
-    "tokenLoginKey": "jdwjdeiwdoiewkedo32920"
+    "accessTokenKey": "jdwjdeiwdoiewkedo3f3f3rf32f22rf22f2920",
+    "refreshTokenKey": "00r3fkjdwjdeiwdoiefcdf-erdfwkedo32920"
 }

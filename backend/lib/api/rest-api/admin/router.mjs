@@ -2,7 +2,7 @@ import express     from 'express';
 
 import controllers from './controllers/index.mjs';
 import multer from "../middlewares/multer.mjs";
-import {validateJwt} from "../middlewares/token.mjs";
+import {validateAccessToken, validateRefreshToken} from "../middlewares/token.mjs";
 // import middlewares from './../middlewares.mjs';
 
 
@@ -16,27 +16,29 @@ export default function init({sequelize}) {
     // router.use(csrfProtection);
 
     // users
-    router.get('/users', validateJwt, controllers.users.show);
-    router.get('/users/requests', validateJwt, controllers.users.showRequests);
+    router.get('/users', validateAccessToken, controllers.users.show);
+    router.get('/users/requests', validateAccessToken, controllers.users.showRequests);
     router.get('/gpg',  controllers.users.getGpg);
-    router.patch('/users/:id', validateJwt, controllers.users.update);
-    router.delete('/users/:id', validateJwt, controllers.users.delete);
+    router.patch('/users/:id', validateAccessToken, controllers.users.update);
+    router.delete('/users/:id', validateAccessToken, controllers.users.delete);
 
     // articles
     router.get('/articles',  controllers.articles.show);
     router.get('/articles/:id',  controllers.articles.getOne);
-    router.post('/articles', validateJwt, multer.single("file"), controllers.articles.create);
-    router.delete('/articles/:id', validateJwt, controllers.articles.delete);
+    router.post('/articles', validateAccessToken, multer.single("file"), controllers.articles.create);
+    router.post('/articles/image', validateAccessToken, multer.single("file"), controllers.articles.uploadImage);
+    router.delete('/articles/:id', validateAccessToken, controllers.articles.delete);
 
     // categories
     router.get('/categories',  controllers.categories.show);
     router.get('/categories/:id',  controllers.categories.getOne);
-    router.post('/categories', validateJwt,  controllers.categories.create);
-    router.delete('/categories/:id', validateJwt,  controllers.categories.delete);
+    router.post('/categories', validateAccessToken,  controllers.categories.create);
+    router.delete('/categories/:id', validateAccessToken,  controllers.categories.delete);
 
     // authentication
     router.post('/login',  controllers.authentication.login);
     router.post('/register',  controllers.authentication.register);
+    router.post('/refresh', validateRefreshToken, controllers.authentication.refresh);
 
     // router.use(errorHandler);
 

@@ -16,15 +16,22 @@ import CreateCategory from "./components/articles/create-category";
 import {createTheme} from "@mui/material";
 import {ThemeProvider} from "@emotion/react";
 import Users from "./components/users/users";
+import UploadImage from "./components/articles/upload-image";
 
 const darkTheme = createTheme({
     palette: {
         mode: 'dark',
+        primary: {
+            main: '#7e92e5',
+        },
+        secondary: {
+            main: '#a22929'
+        }
     },
 });
 
 function App(){
-    const token = useSelector(state => state.users.token);
+    const accessToken = useSelector(state => state.users.accessToken);
     return (
         <ThemeProvider theme={darkTheme}>
             <div className="App">
@@ -41,9 +48,10 @@ function App(){
                         <Route exact path="/register" element={<Register/>}/>
                         <Route path="*" element={<NotFound/>}/>
 
-                        {token && <Route exact path="/create" element={<Create/>}/>}
-                        {token && <Route exact path="/create-category" element={<CreateCategory/>}/>}
-                        {token && <Route exact path="/users" element={<Users/>}/>}
+                        {accessToken && <Route exact path="/create" element={<Create/>}/>}
+                        {accessToken && <Route exact path="/create-category" element={<CreateCategory/>}/>}
+                        {accessToken && <Route exact path="/upload-image" element={<UploadImage/>}/>}
+                        {accessToken && <Route exact path="/users" element={<Users/>}/>}
                     </Routes>
                 </BrowserRouter>
             </div>

@@ -19,6 +19,8 @@
     "bluebird": "^3.7.2",
     "body-parser": "^1.20.0",
     "cls-hooked": "^4.2.2",
+    "const": "^1.0.0",
+    "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
     "express": "^4.17.3",
     "flat": "^5.0.2",
@@ -33,10 +35,11 @@
     "mysql2": "^2.3.3",
     "node-fetch": "^3.2.4",
     "nodemailer": "^6.7.4",
-    "npm": "^8.6.0",
+    "npm": "^8.19.2",
     "openpgp": "^5.5.0",
     "sequelize": "^6.17.0",
-    "uuidv4": "^6.2.13"
+    "uuidv4": "^6.2.13",
+    "winston": "^3.8.2"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.17.0",

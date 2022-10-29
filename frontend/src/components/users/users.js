@@ -44,16 +44,16 @@ function Home() {
     const [isPushedRequest, setIsPushedRequests] = useState(false);
 
     useEffect(() => {
-        dispatch(sendGetUsers({token: users.token}));
+        dispatch(sendGetUsers({accessToken: users.accessToken}));
     },[])
 
     function get_requests() {
-        dispatch(sendGetRequests({token: users.token}));
+        dispatch(sendGetRequests({accessToken: users.accessToken}));
         setIsPushedRequests(true);
     }
 
     function get_users() {
-        dispatch(sendGetUsers({token: users.token}));
+        dispatch(sendGetUsers({accessToken: users.accessToken}));
         setIsPushedRequests(false);
     }
 
@@ -78,7 +78,7 @@ function Home() {
                         <td style={{width:"10%", border: "1px solid gray"}}>
                             <Button fullWidth
                                     onClick={()=>{
-                                        dispatch(sendDelete({id: i.id, token: users.token}))
+                                        dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
                                     }}
                                     color="secondary"
                             >
@@ -108,7 +108,7 @@ function Home() {
                             {isPushedRequest &&
                                 <Button fullWidth
                                         onClick={()=>{
-                                            dispatch(sendEmailVerify({id: i.id, token: users.token}))
+                                            dispatch(sendEmailVerify({id: i.id, accessToken: users.accessToken}))
                                         }}>
                                     verify
                                 </Button>
