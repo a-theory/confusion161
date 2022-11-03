@@ -21,8 +21,7 @@ function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const User = {email, password, name};
-        dispatch(sendRegister({user: User, navigate: navigate}));
+        dispatch(sendRegister({email, password, name}));
     }
 
     const onChangePassword = (e) => setPassword(e.target.value);

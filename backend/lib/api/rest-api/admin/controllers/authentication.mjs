@@ -8,6 +8,7 @@ export default {
         ...req.query,
         ...req.params,
         ...req.body,
+        useragent: req.useragent,
     })),
     register    : makeUseCaseRunner(Register, req => ({ ...req.query, ...req.params, ...req.body })),
     refresh    : makeUseCaseRunner(Refresh, (req, res) => ({

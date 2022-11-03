@@ -17,7 +17,6 @@ function Create() {
         e.preventDefault();
         dispatch(sendUploadImage({
             file: image,
-            accessToken: users.accessToken
         }));
     };
 

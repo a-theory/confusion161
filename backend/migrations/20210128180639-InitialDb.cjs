@@ -51,7 +51,7 @@ module.exports = {
                 type: Sequelize.STRING,
                 allowNull: false,
             },
-            pdf: {
+            url: {
                 type: Sequelize.TEXT,
                 allowNull: false,
             },
@@ -63,7 +63,13 @@ module.exports = {
                 ],
                 defaultValue: "PROCESS",
             },
-
+            userId: {
+                type: Sequelize.UUID,
+                allowNull: false,
+                references: { model: "Users", key: "id" },
+                onUpdate: "CASCADE",
+                onDelete: "CASCADE",
+            },
             createdAt      : { type: Sequelize.DATE,    allowNull: false },
             updatedAt      : { type: Sequelize.DATE,    allowNull: false }
         }, {
@@ -82,35 +88,6 @@ module.exports = {
             brief: {
                 type: Sequelize.STRING,
                 allowNull: false,
-            },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-            }
-        });
-        await queryInterface.createTable("UsersToArticles", {
-            id: {
-                type: Sequelize.UUID,
-                defaultValue: Sequelize.UUIDV4,
-                primaryKey: true,
-            },
-            userId: {
-                type: Sequelize.UUID,
-                allowNull: false,
-                references: { model: "Users", key: "id" },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
-            },
-            articleId: {
-                type: Sequelize.UUID,
-                allowNull: false,
-                references: { model: "Articles", key: "id" },
-                onUpdate: "CASCADE",
-                onDelete: "CASCADE",
             },
             createdAt: {
                 allowNull: false,
@@ -150,13 +127,47 @@ module.exports = {
                 type: Sequelize.DATE
             }
         });
+        await queryInterface.createTable("Keys", {
+            id: {
+                type: Sequelize.UUID,
+                defaultValue: Sequelize.UUIDV4,
+                primaryKey: true,
+            },
+            refresh: {
+                type: Sequelize.TEXT,
+                allowNull: false,
+            },
+            access: {
+                type: Sequelize.TEXT,
+                allowNull: false,
+            },
+            userAgent: {
+                type: Sequelize.TEXT,
+                allowNull: false,
+            },
+            userId: {
+                type: Sequelize.UUID,
+                allowNull: false,
+                references: { model: "Users", key: "id" },
+                onUpdate: "CASCADE",
+                onDelete: "CASCADE",
+            },
+            createdAt: {
+                allowNull: false,
+                type: Sequelize.DATE
+            },
+            updatedAt: {
+                allowNull: false,
+                type: Sequelize.DATE
+            }
+        });
     },
 
     down : async (queryInterface) => {
         await queryInterface.dropTable('Users');
         await queryInterface.dropTable('Articles');
         await queryInterface.dropTable('Categories');
-        await queryInterface.dropTable('UsersToArticles');
         await queryInterface.dropTable('ArticlesToCategories');
+        await queryInterface.dropTable('Keys');
     }
 };

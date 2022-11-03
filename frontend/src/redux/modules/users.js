@@ -1,159 +1,59 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from "../utils/axios";
+import { createSlice } from '@reduxjs/toolkit';
 import { toast } from 'react-toastify';
+import {asyncRequest} from "../utils/asyncRequest";
 
-export const sendGetUser = createAsyncThunk(
+export const sendGetUser = asyncRequest(
     'users/sendGetUser',
-    async (param, thunkAPI) => {
-        try {
-            if (!param.id) return null;
-            const res = await axios.get(`/users/${param.id}`);
-            return res.data.user;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/users',
 )
 
-export const sendLogin = createAsyncThunk(
+export const sendLogin = asyncRequest(
     'users/sendLogin',
-    async (param, thunkAPI) => {
-        try {
-            const res = await axios.post(`/login`, param.user);
-            if (res?.data?.status) {
-                localStorage.setItem('accessToken', res.data.accessToken)
-                localStorage.setItem('refreshToken', res.data.refreshToken)
-                toast.success("Log in");
-                param.navigate("/")
-                return {
-                    accessToken: localStorage.getItem('accessToken'),
-                    refreshToken: localStorage.getItem('refreshToken'),
-                    user: res.data.user,
-                    error: null,
-                };
-            } else {
-
-            }
-        } catch (err) {
-            console.log(err.response.data.error)
-            toast.error(err.response.data.error);
-        }
-    }
+    'post',
+    '/login',
 )
 
-export const sendRegister = createAsyncThunk(
+export const sendRegister = asyncRequest(
     'users/sendRegister',
-    async (param, thunkAPI) => {
-        try {
-            await axios.post(`/register`, param.user);
-            param.navigate('/login');
-            toast.success("Wait, I will check your email");
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'post',
+    '/register',
 )
 
-export const sendGetGpg = createAsyncThunk(
+export const sendGetGpg = asyncRequest(
     'users/sendGetGpg',
-    async (param, thunkAPI) => {
-        try {
-            const res = await axios.get(`/gpg`);
-            return res.data
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/gpg',
 )
 
-export const sendGetRequests = createAsyncThunk(
+export const sendGetRequests = asyncRequest(
     'users/sendGetRequests',
-    async (param, thunkAPI) => {
-        try {
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            const res = await axios.get(`/users/requests`, header);
-            return res.data.users;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/users/requests',
 )
 
-export const sendGetUsers = createAsyncThunk(
+export const sendGetUsers = asyncRequest(
     'users/sendGetUsers',
-    async (param, thunkAPI) => {
-        try {
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            const res = await axios.get(`/users`, header);
-            return res.data.users;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/users',
 )
 
-export const sendDelete = createAsyncThunk(
+export const sendDelete = asyncRequest(
     'users/sendDelete',
-    async (param, thunkAPI) => {
-        try {
-            if (!param.id) return null;
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            await axios.delete(`/users/${param.id}`, header);
-            window.location.reload(false);
-            return {};
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'delete',
+    '/user',
 )
 
-export const sendEmailVerify = createAsyncThunk(
+export const sendEmailVerify = asyncRequest(
     'users/sendEmailVerify',
-    async (param, thunkAPI) => {
-        try {
-            if (!param.id) return null;
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            console.log({accessToken: param.accessToken})
-            await axios.patch(`/users/${param.id}`, {}, header);
-            window.location.reload(false);
-            return {};
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'patch',
+    '/user',
 )
 
-export const sendRefreshToken = createAsyncThunk(
+export const sendRefreshToken = asyncRequest(
     'users/sendRefreshToken',
-    async (param, thunkAPI) => {
-        try {
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.refreshToken}`,
-                }
-            }
-            await axios.patch(`/refresh`, {}, header);
-            return {};
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/refresh',
 )
 
 const initialState = {
@@ -162,6 +62,7 @@ const initialState = {
     status: 'idle',
     accessToken: localStorage.getItem('accessToken'),
     refreshToken: localStorage.getItem('refreshToken'),
+    userId: localStorage.getItem('userId'),
     gpg: null,
     user: null,
     count: 1,
@@ -186,19 +87,22 @@ const slice = createSlice({
             state.user = action.payload;
         })
         builder.addCase(sendLogin.fulfilled, (state, action) => {
-            state.accessToken = action.payload.accessToken;
-            state.refreshToken = action.payload.refreshToken;
-            state.user = action.payload.user;
+            localStorage.setItem('accessToken', action.payload.accessToken)
+            localStorage.setItem('refreshToken', action.payload.refreshToken)
+            localStorage.setItem('userId', action.payload.userId)
+            state.accessToken = localStorage.getItem('accessToken');
+            state.refreshToken = localStorage.getItem('refreshToken');
+            state.userId = localStorage.getItem('userId');
         })
         builder.addCase(sendGetGpg.fulfilled, (state, action) => {
             state.gpg = action.payload.gpg;
         })
         builder.addCase(sendRegister.fulfilled, (state, action) => {})
         builder.addCase(sendGetRequests.fulfilled, (state, action) => {
-            state.users = action.payload;
+            state.users = action.payload.users;
         })
         builder.addCase(sendGetUsers.fulfilled, (state, action) => {
-            state.users = action.payload;
+            state.users = action.payload.users;
         })
         builder.addCase(sendDelete.fulfilled, (state, action) => {})
         builder.addCase(sendEmailVerify.fulfilled, (state, action) => {})

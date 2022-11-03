@@ -15,7 +15,10 @@ function Create() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(sendCreate({name, brief, navigate: navigate, accessToken: users.accessToken}));
+        dispatch(sendCreate({
+            name,
+            brief,
+        }));
     };
 
     const onChangeName = (e) => setName(e.target.value);

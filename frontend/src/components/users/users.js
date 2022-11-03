@@ -44,18 +44,19 @@ function Home() {
     const [isPushedRequest, setIsPushedRequests] = useState(false);
 
     useEffect(() => {
-        dispatch(sendGetUsers({accessToken: users.accessToken}));
+        dispatch(sendGetUsers());
     },[])
 
     function get_requests() {
-        dispatch(sendGetRequests({accessToken: users.accessToken}));
+        dispatch(sendGetRequests());
         setIsPushedRequests(true);
     }
 
     function get_users() {
-        dispatch(sendGetUsers({accessToken: users.accessToken}));
+        dispatch(sendGetUsers());
         setIsPushedRequests(false);
     }
+
 
     return (
         <div>
@@ -73,12 +74,14 @@ function Home() {
             </div>
             <table style={styles.Ul}>
                 <tbody>
-                {users.users?.map(i => (
+                {users?.users?.map(i => (
                     <tr key={i.id}>
                         <td style={{width:"10%", border: "1px solid gray"}}>
                             <Button fullWidth
                                     onClick={()=>{
-                                        dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
+                                        dispatch(sendDelete({
+                                            query: {id: i.id},
+                                        }))
                                     }}
                                     color="secondary"
                             >
@@ -108,7 +111,9 @@ function Home() {
                             {isPushedRequest &&
                                 <Button fullWidth
                                         onClick={()=>{
-                                            dispatch(sendEmailVerify({id: i.id, accessToken: users.accessToken}))
+                                            dispatch(sendEmailVerify({
+                                                id: i.id,
+                                            }))
                                         }}>
                                     verify
                                 </Button>

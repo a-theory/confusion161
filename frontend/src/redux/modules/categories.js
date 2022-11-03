@@ -1,69 +1,28 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import axios from "../utils/axios";
-import { toast } from 'react-toastify';
+import { createSlice } from '@reduxjs/toolkit';
+import {asyncRequest} from "../utils/asyncRequest";
 
-export const sendList = createAsyncThunk(
+export const sendList = asyncRequest(
     'categories/sendList',
-    async (param, thunkAPI) => {
-        try {
-            const res = await axios.get(`/categories`);
-            return res.data.categories;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    '/categories',
 )
 
-export const sendGetOne = createAsyncThunk(
+export const sendGetOne = asyncRequest(
     'categories/sendGetOne',
-    async (param, thunkAPI) => {
-        try {
-            if (!param.id) return null;
-            const res = await axios.get(`/categories/${param.id}`);
-            return res.data.category;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'get',
+    `/category/`
 )
 
-export const sendCreate = createAsyncThunk(
+export const sendCreate = asyncRequest(
     'categories/sendCreate',
-    async (param, thunkAPI) => {
-        try {
-            if (!param) return null;
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            const res = await axios.post(`/categories`, param, header);
-            param.navigate("/");
-            toast.success("200, Category created");
-            return res.data.category;
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'post',
+    `/category`
 )
 
-export const sendDelete = createAsyncThunk(
+export const sendDelete = asyncRequest(
     'categories/sendDelete',
-    async (param, thunkAPI) => {
-        try {
-            if (!param.id) return null;
-            let header = {
-                headers: {
-                    Authorization: `Bearer ${param.accessToken}`,
-                }
-            }
-            await axios.delete(`/categories/${param.id}`, header);
-            toast.success("200, Category deleted");
-            window.location.reload(false);
-        } catch (err) {
-            toast.error(err.response.data.error);
-        }
-    }
+    'delete',
+    `/category`
 )
 
 const initialState = {
@@ -82,10 +41,10 @@ const slice = createSlice({
     extraReducers: (builder) => {
         builder.addCase(sendGetOne.fulfilled, (state, action) => {
             state.categories = [];
-            state.category = action.payload;
+            state.category = action.payload.category;
         })
         builder.addCase(sendList.fulfilled, (state, action) => {
-            state.categories = action.payload;
+            state.categories = action.payload.categories;
             state.category = null;
         })
         builder.addCase(sendCreate.fulfilled, (state, action) => {})

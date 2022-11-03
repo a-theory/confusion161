@@ -64,7 +64,7 @@ function Home() {
 
     useEffect(() => {
         if (categories.status === 'idle'){
-            dispatch(sendGetOne({id}))
+            dispatch(sendGetOne({query: {id}}))
         }
     },[])
 
@@ -85,14 +85,16 @@ function Home() {
             <div style={styles.Simple}>
                 <table style={styles.Ul}>
                     <tbody>
-                        {categories.category?.Articles.map(i => (
+                        {categories.category?.Articles?.map(i => (
                             <tr key={i.id}>
                                 {users.accessToken &&
                                     <td style={{width: "10%", border: "1px solid gray"}}>
                                         <Button fullWidth
                                                 color="secondary"
                                                 onClick={() => {
-                                                    dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
+                                                    dispatch(sendDelete({
+                                                        query: {id: i.id},
+                                                    }))
                                                 }}
                                         >
                                             Delete

@@ -9,6 +9,7 @@ import adminRotes    from './admin/router.mjs';
 import path from "path";
 import helmet from "helmet";
 import winston from 'winston';
+import useragent from 'express-useragent';
 
 const logger = winston.createLogger({
     level: 'info',
@@ -33,8 +34,9 @@ export function init({ sequelize }) {
     app.use(bodyParser.json());
     app.use(express.json());
     app.use(helmet());
-
+    app.use(useragent.express());
     app.use('/storage', express.static('storage'));
+
     app.use('/api/v1',  adminRotes({ sequelize }));
 
     return app;

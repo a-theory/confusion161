@@ -9,7 +9,7 @@ function Home() {
     const id = useParams().id;
 
     useEffect(() => {
-        dispatch(sendGetOne(id))
+        dispatch(sendGetOne({query: {id}}))
     },[])
 
     return (

@@ -14,7 +14,7 @@ export default class GetOne extends Base {
     async execute({ id }) {
         const article = await Articles.findOne({ where: { id } });
         const minioClient = await initMinio();
-        const buffer = await call({minioClient, url: article.pdf});
+        const buffer = await call({minioClient, url: article.url});
 
         return {
             article,

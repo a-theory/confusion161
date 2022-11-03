@@ -11,7 +11,7 @@ export default class Articles extends Base {
 			id: { type: DT.UUID, defaultValue: DT.UUIDV4, primaryKey: true },
 			name: DT.STRING,
 			brief: DT.STRING,
-			pdf: DT.TEXT,
+			url: DT.TEXT,
 			status   : DT.ENUM('PROCESS', 'DONE'),
 
 			createdAt : { type: DT.DATE, allowNull: false },
@@ -21,9 +21,8 @@ export default class Articles extends Base {
 	}
 
 	static initRelations() {
-		Articles.belongsToMany(Users, {
-			through: "UsersToArticles",
-			foreignKey: "articleId",
+		Articles.belongsTo(Users, {
+			foreignKey: "userId",
 			onDelete: "cascade",
 		});
 		Articles.belongsToMany(Categories, {

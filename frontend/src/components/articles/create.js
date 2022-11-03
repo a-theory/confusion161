@@ -35,8 +35,6 @@ function Create() {
             name,
             brief,
             file: pdf,
-            navigate: navigate,
-            accessToken: users.accessToken
         }));
     };
 
@@ -48,8 +46,8 @@ function Create() {
         for (let i = 0; i < newValues.length; i++){
             arr.push(newValues[i].id)
         }
-        const json = JSON.stringify(arr);
-        setCategories(json);
+        // const json = JSON.stringify();
+        setCategories(arr);
     };
 
     return (

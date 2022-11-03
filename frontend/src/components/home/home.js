@@ -128,7 +128,9 @@ function Home() {
                                     <td style={{width:"10%", border: "1px solid gray"}}>
                                         <Button fullWidth color="secondary"
                                                 onClick={()=>{
-                                                    dispatch(sendDelete({id: i.id, accessToken: users.accessToken}))
+                                                    dispatch(sendDelete({
+                                                        query: {id: i.id},
+                                                    }))
                                                 }}
                                         >
                                             Delete

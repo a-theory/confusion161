@@ -19,8 +19,7 @@ function Login() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const User = {email, password};
-        dispatch(sendLogin({user: User, navigate: navigate}));
+        dispatch(sendLogin({email, password}));
     };
 
     const onChangeEmail = (e) => setEmail(e.target.value);

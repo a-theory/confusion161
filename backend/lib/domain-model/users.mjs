@@ -2,6 +2,7 @@ import { DataTypes as DT }     from 'sequelize';
 import Base                from './Base.mjs';
 import argon2 from "argon2";
 import Articles from "./articles.mjs";
+import Keys from "./keys.mjs";
 
 export default class Users extends Base {
     static tableName = 'Users';
@@ -22,11 +23,8 @@ export default class Users extends Base {
     }
 
     static initRelations() {
-        Users.belongsToMany(Articles, {
-            through: "UsersToArticles",
-            foreignKey: "userId",
-            onDelete: "cascade",
-        });
+        Users.hasMany(Articles, {foreignKey: "userId", onDelete: "cascade",});
+        Users.hasMany(Keys, {foreignKey: "userId", onDelete: "cascade",});
     }
 
     static async createUser(params) {
