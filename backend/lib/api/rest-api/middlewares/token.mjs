@@ -65,12 +65,12 @@ async function tokenDecryption(req, res, isAccess) {
         }]
     });
 
-
     if (user?.Keys?.length > 1) {
         return res.status(400).send({
             error: "WRONG_TOKEN_SECURE"
         });
     }
+
     const keys = user.Keys[0];
     let key = isAccess ?
         keys.access : keys.refresh;

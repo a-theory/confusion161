@@ -32,7 +32,7 @@ function Login() {
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <CustomInput inputProps={{ maxLength: 255, minLength: 3 }} onChange={onChangeEmail} required placeholder={t('email')} type='email'/>
                 <CustomInput inputProps={{ maxLength: 20, minLength: 8 }}  onChange={onChangePassword} required placeholder={t('password')} type='password'/>
-                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
+                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
             </form>
             <Link to={"/register"} style={{color: "white"}}>
                 Register

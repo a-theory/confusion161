@@ -22,6 +22,11 @@ export default class login extends Base {
     async execute({ email, password, useragent }) {
         const user = await User.findOne({ where: { email } });
 
+        const prevKeys = await Keys.findOne({where: {userId: user.id}});
+        if (prevKeys){
+            throw new Error("user already registered")
+        }
+
         const errors = {};
 
         if (!user) throw ({ email: 'EMAIL_NOT_EXIST' });

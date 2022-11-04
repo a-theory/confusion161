@@ -36,7 +36,7 @@ function Register() {
                 <CustomInput onChange={onChangeName} inputProps={{ maxLength: 25, minLength: 1 }} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeEmail} inputProps={{ maxLength: 255, minLength: 3 }} required placeholder={'email'} type='email'/>
                 <CustomInput onChange={onChangePassword} inputProps={{ maxLength: 20, minLength: 8 }} required placeholder={'password'} type='password'/>
-                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>"Next"</OneTimeButton>
+                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>"Next"</Button>
             </form>
             <Link to={"/login"} style={{color: "white"}}>
                 Login
