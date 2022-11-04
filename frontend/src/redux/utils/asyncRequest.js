@@ -22,18 +22,18 @@ export function asyncRequest(prefix, method, url) {
             try {
                 resData = await getRes({method, url: correctUrl, data: correctData, header});
             } catch (err) {
-                console.log(err.response)
-
                 if(err.response.status === 401){
+                    header.headers.Authorization = `Bearer ${refreshToken}`
                     const resToken = await getRes({
                         method: "post",
                         url: `${config.url}/refresh?userId=${userId}`,
-                        data: {refreshToken: refreshToken},
+                        data: {},
                         header
                     });
+                    localStorage.setItem('accessToken', resToken.data.accessToken)
+                    header.headers.Authorization = `Bearer ${resToken.data.accessToken}`
                     const res = await getRes({method, url: correctUrl, data: correctData, header});
-                    resData.data = Object.assign(resToken.data, res.data);
-                    console.log(resData)
+                    resData.data = res.data;
                 }
                 else toast.error(err.response.data.error);
             }

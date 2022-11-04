@@ -17,8 +17,8 @@ async function validateToken(req, res, next, isAccess) {
         const {token, key, user} = await tokenDecryption(req, res, isAccess)
         await tokenSecure(token, key, user, res, isAccess);
 
-        delete user.Keys;
-        req.userData = user;
+        delete user.dataValues.Keys;
+        req.userData = user.dataValues;
 
         await next();
     } catch (e) {
@@ -65,7 +65,8 @@ async function tokenDecryption(req, res, isAccess) {
         }]
     });
 
-    if (user.Keys.length > 1) {
+
+    if (user?.Keys?.length > 1) {
         return res.status(400).send({
             error: "WRONG_TOKEN_SECURE"
         });
@@ -101,10 +102,10 @@ function getToken(req) {
     return null;
 }
 
-function isTokenExpired(token) {
-    const payloadBase64 = token.split('.')[1];
-    const decodedJson = Buffer.from(payloadBase64, 'base64').toString();
-    const decoded = JSON.parse(decodedJson)
-    const exp = decoded.exp;
-    return (Date.now() >= exp * 1000)
-}
+// function isTokenExpired(token) {
+//     const payloadBase64 = token.split('.')[1];
+//     const decodedJson = Buffer.from(payloadBase64, 'base64').toString();
+//     const decoded = JSON.parse(decodedJson)
+//     const exp = decoded.exp;
+//     return (Date.now() >= exp * 1000)
+// }

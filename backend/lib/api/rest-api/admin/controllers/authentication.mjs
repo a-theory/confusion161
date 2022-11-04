@@ -14,6 +14,7 @@ export default {
     refresh    : makeUseCaseRunner(Refresh, (req, res) => ({
         ...req.query,
         ...req.params,
-        ...req.body
+        ...req.body,
+        userData: req.userData
     })),
 };
