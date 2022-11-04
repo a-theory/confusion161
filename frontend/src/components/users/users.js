@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {Button} from "@mui/material";
 import {sendDelete, sendEmailVerify, sendGetRequests, sendGetUsers} from "../../redux/modules/users";
+import {OneTimeButton} from "../utils/custom";
 
 let styles = {
     Title: {
@@ -77,7 +78,7 @@ function Home() {
                 {users?.users?.map(i => (
                     <tr key={i.id}>
                         <td style={{width:"10%", border: "1px solid gray"}}>
-                            <Button fullWidth
+                            <OneTimeButton fullWidth
                                     onClick={()=>{
                                         dispatch(sendDelete({
                                             query: {id: i.id},
@@ -86,7 +87,7 @@ function Home() {
                                     color="secondary"
                             >
                                 Delete
-                            </Button>
+                            </OneTimeButton>
                         </td>
                         <td style={styles.Li}>
                             {i.name}
@@ -95,28 +96,22 @@ function Home() {
                             {i.email}
                         </td>
                         <td style={{width:"10%", border: "1px solid gray"}}>
-                            {!isPushedRequest && <Button fullWidth onClick={
+                            {!isPushedRequest && <OneTimeButton fullWidth onClick={
                                 () => {
                                     navigator.clipboard.writeText(i.email)
-                                    setIsPushed(true)
                                 }
                             }>
-                                {!isPushed &&
-                                    <div>copy</div>
-                                }
-                                { isPushed &&
-                                    <b>coped ✅</b>
-                                }
-                            </Button>}
+                                <div>copy</div>
+                            </OneTimeButton>}
                             {isPushedRequest &&
-                                <Button fullWidth
+                                <OneTimeButton fullWidth
                                         onClick={()=>{
                                             dispatch(sendEmailVerify({
                                                 id: i.id,
                                             }))
                                         }}>
                                     verify
-                                </Button>
+                                </OneTimeButton>
                             }
                         </td>
 

@@ -7,6 +7,7 @@ import {Button, Tabs, Tab} from "@mui/material";
 import {styleAuth, CustomInput} from "../../styles/main"
 import {useTranslation} from 'react-i18next'
 import {Link} from "react-router-dom";
+import {OneTimeButton} from "../utils/custom";
 const Tr = useTranslation;
 
 function Register() {
@@ -35,7 +36,7 @@ function Register() {
                 <CustomInput onChange={onChangeName} inputProps={{ maxLength: 25, minLength: 1 }} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeEmail} inputProps={{ maxLength: 255, minLength: 3 }} required placeholder={'email'} type='email'/>
                 <CustomInput onChange={onChangePassword} inputProps={{ maxLength: 20, minLength: 8 }} required placeholder={'password'} type='password'/>
-                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>"Next"</Button>
+                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>"Next"</OneTimeButton>
             </form>
             <Link to={"/login"} style={{color: "white"}}>
                 Login

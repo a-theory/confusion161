@@ -9,6 +9,7 @@ import {Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
 import {useSelector} from "react-redux";
 import {Autocomplete} from "@mui/lab";
+import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = rr.useDispatch();
@@ -84,7 +85,7 @@ function Create() {
                         />
                     )}
                 />
-                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
+                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
             </form>
             <div>
                 <Link to={"/create-category"} style={{color: "white", padding:10}}>

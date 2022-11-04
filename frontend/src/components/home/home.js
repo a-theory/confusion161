@@ -4,6 +4,7 @@ import {useNavigate, Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
 import {Button, ButtonBase} from "@mui/material";
 import {sendDelete} from "../../redux/modules/categories";
+import {OneTimeButton} from "../utils/custom";
 
 let styles = {
     Title: {
@@ -126,7 +127,7 @@ function Home() {
                             <tr  key={i.id}>
                                 {users.accessToken &&
                                     <td style={{width:"10%", border: "1px solid gray"}}>
-                                        <Button fullWidth color="secondary"
+                                        <OneTimeButton fullWidth color="secondary"
                                                 onClick={()=>{
                                                     dispatch(sendDelete({
                                                         query: {id: i.id},
@@ -134,7 +135,7 @@ function Home() {
                                                 }}
                                         >
                                             Delete
-                                        </Button>
+                                        </OneTimeButton>
                                     </td>
                                 }
                                 <td style={styles.Li}>

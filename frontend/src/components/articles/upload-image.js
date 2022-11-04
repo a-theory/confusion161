@@ -4,6 +4,7 @@ import {styleAuth} from "../../styles/main"
 import {cleanUrl, sendUploadImage} from "../../redux/modules/articles";
 import {Link} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = useDispatch();
@@ -49,18 +50,13 @@ function Create() {
                         />
                     </Button>
                     {articles.url &&
-                        <Button style={{marginLeft: 10}} onClick={handleCope} variant='outlined'>
-                            {!isPushed &&
-                                <div>copy</div>
-                            }
-                            { isPushed &&
-                                <b>done</b>
-                            }
-                        </Button>
+                        <OneTimeButton style={{marginLeft: 10}} onClick={handleCope} variant='outlined'>
+                            <div>copy</div>
+                        </OneTimeButton>
                     }
                 </div>
 
-                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
+                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
             </form>
             <div style={{display: "flex"}}>
                 <Link to={"/create-category"} style={{color: "white", padding:10}}>

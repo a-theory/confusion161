@@ -18,6 +18,7 @@ import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Zoom from '@mui/material/Zoom';
 import {useDispatch, useSelector} from "react-redux";
 import {logOut} from "../../redux/modules/users";
+import {OneTimeButton} from "../utils/custom";
 
 export function ScrollTop(props) {
     const { children } = props;
@@ -99,14 +100,14 @@ export default function ToolbarMain(props) {
                             </Button>
                         }
                         {path &&
-                            <Button
+                            <OneTimeButton
                                 color='primary'
                                 onClick={()=>{
                                     window.open(articles?.article?.pdf,'_blank')
                                 }}
                             >
                                 Download the article 🇺🇦
-                            </Button>
+                            </OneTimeButton>
                         }
                     </div>
                     </Toolbar>

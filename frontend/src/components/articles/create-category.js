@@ -5,6 +5,7 @@ import {sendCreate} from "../../redux/modules/categories";
 import {Link, useNavigate} from "react-router-dom";
 import {useDispatch} from "react-redux";
 import * as rr from "react-redux";
+import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = useDispatch();
@@ -30,7 +31,7 @@ function Create() {
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <CustomInput onChange={onChangeName} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeBrief} required placeholder={'brief'}/>
-                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
+                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
             </form>
             <div>
                 <Link to={"/create"} style={{color: "white", padding:10}}>
