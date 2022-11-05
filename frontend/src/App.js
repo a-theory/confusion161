@@ -1,22 +1,23 @@
-import React from "react";
+import React, {lazy, Suspense} from "react";
 import "./App.css"
 import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {createTheme}    from "@mui/material";
+import {ThemeProvider}  from "@emotion/react";
 
-import Login from "./components/auth/login";
-import Register from "./components/auth/register";
-import Toolbar from "./components/toolbar/toolbar";
-import NotFound from "./components/utils/notfound";
-import Home from "./components/home/home";
-import Category from "./components/articles/category";
-import Create from "./components/articles/create";
-import Gpg from "./components/gpg/gpg";
-import {useSelector} from "react-redux";
-import Article from "./components/articles/article";
-import CreateCategory from "./components/articles/create-category";
-import {createTheme} from "@mui/material";
-import {ThemeProvider} from "@emotion/react";
-import Users from "./components/users/users";
-import UploadImage from "./components/articles/upload-image";
+import {RouteAuthorized, FallBack} from "./components/utils/route"
+
+const Login          = lazy(()=> import("./components/auth/login"));
+const Register       = lazy(()=> import("./components/auth/register"));
+const Toolbar        = lazy(()=> import("./components/toolbar/toolbar"));
+const NotFound       = lazy(()=> import("./components/utils/notfound"));
+const Home           = lazy(()=> import("./components/home/home"));
+const Category       = lazy(()=> import("./components/articles/category"));
+const Create         = lazy(()=> import("./components/articles/create"));
+const Gpg            = lazy(()=> import("./components/gpg/gpg"));
+const Article        = lazy(()=> import("./components/articles/article"));
+const CreateCategory = lazy(()=> import("./components/articles/create-category"));
+const Users          = lazy(()=> import("./components/users/users"));
+const UploadImage    = lazy(()=> import("./components/articles/upload-image"));
 
 const darkTheme = createTheme({
     palette: {
@@ -31,29 +32,29 @@ const darkTheme = createTheme({
 });
 
 function App(){
-    const accessToken = useSelector(state => state.users.accessToken);
     return (
         <ThemeProvider theme={darkTheme}>
             <div className="App">
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="*" element={<Toolbar/>}/>
-                    </Routes>
-                    <Routes>
-                        <Route exact path="/" element={<Home/>}/>
-                        <Route exact path="/categories/:id" element={<Category/>}/>
-                        <Route exact path="/articles/:id" element={<Article/>}/>
-                        <Route exact path="/login" element={<Login/>}/>
-                        <Route exact path="/getGpg" element={<Gpg/>}/>
-                        <Route exact path="/register" element={<Register/>}/>
-                        <Route path="*" element={<NotFound/>}/>
-
-                        {accessToken && <Route exact path="/create" element={<Create/>}/>}
-                        {accessToken && <Route exact path="/create-category" element={<CreateCategory/>}/>}
-                        {accessToken && <Route exact path="/upload-image" element={<UploadImage/>}/>}
-                        {accessToken && <Route exact path="/users" element={<Users/>}/>}
-                    </Routes>
-                </BrowserRouter>
+                <Suspense fallback={FallBack()}>
+                    <BrowserRouter>
+                        <Toolbar/>
+                        <Routes>
+                            <Route path="/" element={<Home/>}/>
+                            <Route path="/categories/:id" element={<Category/>}/>
+                            <Route path="/articles/:id" element={<Article/>}/>
+                            <Route path="/login" element={<Login/>}/>
+                            <Route path="/getGpg" element={<Gpg/>}/>
+                            <Route path="/register" element={<Register/>}/>
+                            <Route path="*" element={<NotFound/>}/>
+                            <Route element={<RouteAuthorized />}>
+                                <Route exact path="/create" element={<Create/>}/>
+                                <Route exact path="/create-category" element={<CreateCategory/>}/>
+                                <Route exact path="/upload-image" element={<UploadImage/>}/>
+                                <Route exact path="/users" element={<Users/>}/>
+                            </Route>
+                        </Routes>
+                    </BrowserRouter>
+                </Suspense>
             </div>
         </ThemeProvider>
     );

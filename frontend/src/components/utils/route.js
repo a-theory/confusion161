@@ -1,33 +1,21 @@
 import React from "react";
 import * as rr from "react-redux";
-import {Route, Navigate} from "react-router-dom";
+import {Navigate, Outlet} from "react-router-dom";
 
-export function RouteClient({ element: Element, ...rest }) {
+export function RouteAuthorized(rest) {
     const users = rr.useSelector(state => state.users);
-    if (users.token){
-        return (
-            <Route
-              {...rest}
-              render={routeProps => (
-                  <Element {...routeProps} />
-              )}
-            />
-          );
+    if (users.accessToken){
+        return <Outlet />;
     }
-    return (<Route path="*" element={<Navigate to ="/404" />}/>);
-  }
+    return (
+        <Navigate to={"/login"} replace />
+    );
+}
 
-  export function RouteGuest({ element: Element, ...rest }) {
-    const users = rr.useSelector(state => state.users);
-    if (!users.token){
-        return (
-            <Route
-              {...rest}
-              render={routeProps => (
-                  <Element {...routeProps} />
-              )}
-            />
-          );
-    }
-    return (<Route path="*" element={<Navigate to ="/404" />}/>);
-  }
+export function FallBack(){
+    return(
+        <div style={{marginTop: "10%", fontSize: 50}}>
+            {/*Loading...*/}
+        </div>
+    )
+}
