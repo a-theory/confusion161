@@ -4,7 +4,7 @@ import {Button} from "@mui/material";
 export function OneTimeButton(props){
     const [isDisabled, setIsDisabled] = useState(false);
     const handleClick = () => {
-        props.onClick();
+        props?.onClick();
         setIsDisabled(true);
     };
 

@@ -75,11 +75,13 @@ const slice = createSlice({
     reducers: {
         logOut: (state, action) => {
             state.user = null;
+            state.userId = null;
             state.accessToken = null;
             state.refreshToken = null;
             toast.success("Log out");
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userId');
         },
     },
     extraReducers: (builder) => {

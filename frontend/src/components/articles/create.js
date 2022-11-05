@@ -85,7 +85,7 @@ function Create() {
                         />
                     )}
                 />
-                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
+                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
             </form>
             <div>
                 <Link to={"/create-category"} style={{color: "white", padding:10}}>

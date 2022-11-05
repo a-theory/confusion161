@@ -31,7 +31,7 @@ function Create() {
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <CustomInput onChange={onChangeName} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeBrief} required placeholder={'brief'}/>
-                <OneTimeButton style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</OneTimeButton>
+                <Button style={styleAuth.Button} type="submit" variant='contained' color='primary'>Next</Button>
             </form>
             <div>
                 <Link to={"/create"} style={{color: "white", padding:10}}>

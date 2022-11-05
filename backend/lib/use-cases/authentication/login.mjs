@@ -47,7 +47,7 @@ export default class login extends Base {
 
         const refreshToken = await jwt.sign(
             { id: user.id },
-            config.refreshTokenKey, { expiresIn: '7d' }
+            config.refreshTokenKey, { expiresIn: '1d' }
         );
         const keyRefreshToken = crypto.randomBytes(32);
         const encryptedRefreshToken = encryptAES(refreshToken, keyRefreshToken)

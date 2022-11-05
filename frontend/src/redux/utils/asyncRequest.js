@@ -4,12 +4,12 @@ import {toast} from "react-toastify";
 import config from "../../config/config";
 
 export function asyncRequest(prefix, method, url) {
-    const refreshToken = localStorage.getItem('refreshToken');
-    const accessToken = localStorage.getItem('accessToken');
-    const userId = localStorage.getItem('userId');
     return createAsyncThunk(
         prefix,
         async (data, thunkAPI) => {
+            const refreshToken = localStorage.getItem('refreshToken');
+            const accessToken = localStorage.getItem('accessToken');
+            const userId = localStorage.getItem('userId');
             let header = setupHeader({data, accessToken});
             const {correctData, correctUrl} = setupData({
                 data,
