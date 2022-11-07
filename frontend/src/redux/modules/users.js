@@ -50,10 +50,10 @@ export const sendEmailVerify = asyncRequest(
     '/user',
 )
 
-export const sendRefreshToken = asyncRequest(
-    'users/sendRefreshToken',
-    'get',
-    '/refresh',
+export const sendLogout = asyncRequest(
+    'users/sendLogout',
+    'post',
+    '/logout',
 )
 
 const initialState = {
@@ -72,18 +72,7 @@ const initialState = {
 const slice = createSlice({
     name: 'users',
     initialState: initialState,
-    reducers: {
-        logOut: (state, action) => {
-            state.user = null;
-            state.userId = null;
-            state.accessToken = null;
-            state.refreshToken = null;
-            toast.success("Log out");
-            localStorage.removeItem('accessToken');
-            localStorage.removeItem('refreshToken');
-            localStorage.removeItem('userId');
-        },
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addCase(sendGetUser.fulfilled, (state, action) => {
             state.user = action.payload;
@@ -95,6 +84,16 @@ const slice = createSlice({
             state.accessToken = localStorage.getItem('accessToken');
             state.refreshToken = localStorage.getItem('refreshToken');
             state.userId = localStorage.getItem('userId');
+        })
+        builder.addCase(sendLogout.fulfilled, (state, action) => {
+            state.user = null;
+            state.userId = null;
+            state.accessToken = null;
+            state.refreshToken = null;
+            toast.success("Log out");
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userId');
         })
         builder.addCase(sendGetGpg.fulfilled, (state, action) => {
             state.gpg = action.payload.gpg;
@@ -112,4 +111,3 @@ const slice = createSlice({
 })
 
 export default slice.reducer;
-export const { logOut } = slice.actions;

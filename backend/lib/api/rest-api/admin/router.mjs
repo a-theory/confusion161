@@ -39,6 +39,7 @@ export default function init({sequelize}) {
     router.post('/login',  controllers.authentication.login);
     router.post('/register',  controllers.authentication.register);
     router.post('/refresh', validateRefreshToken, controllers.authentication.refresh);
+    router.post('/logout', validateAccessToken, controllers.authentication.logout);
 
     // router.use(errorHandler);
 

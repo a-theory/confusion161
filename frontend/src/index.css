@@ -18,8 +18,8 @@ body::before {
   position: absolute;
   z-index: -1;
   background-image: url("../public/brain.png");
-  opacity: 0.035;
-  /*opacity: 0.05;*/
+  /*opacity: 0.035;*/
+  opacity: 0.05;
 }
 
 ::-moz-selection { /* Code for Firefox */

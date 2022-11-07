@@ -17,7 +17,7 @@ import PropTypes from 'prop-types';
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
 import Zoom from '@mui/material/Zoom';
 import {useDispatch, useSelector} from "react-redux";
-import {logOut} from "../../redux/modules/users";
+import {sendLogout} from "../../redux/modules/users";
 import {OneTimeButton} from "../utils/custom";
 
 export function ScrollTop(props) {
@@ -63,10 +63,9 @@ export default function ToolbarMain(props) {
 
     const log_out = () => {
         if (users.accessToken){
-            dispatch(logOut())
-        } else {
-            navigate("/login")
+            dispatch(sendLogout())
         }
+        navigate("/login")
     }
 
     return (

@@ -14,8 +14,8 @@ export function RouteAuthorized(rest) {
 
 export function FallBack(){
     return(
-        <div style={{marginTop: "10%", fontSize: 50}}>
-            {/*Loading...*/}
+        <div style={{position: "absolute", bottom: 10, left: 10, fontSize: 20}}>
+            Loading...
         </div>
     )
 }
