@@ -1,62 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate, Link} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import {sendGetOne} from "../../redux/modules/categories";
 import {sendDelete} from "../../redux/modules/articles";
 import {useParams} from "react-router-dom";
 import {Button} from "@mui/material";
 import {OneTimeButton} from "../utils/custom";
+import {stylesHome} from "../../styles/main";
 
-let styles = {
-    Title: {
-        textAlign: "left",
-        fontFamily: "OldEnglish",
-        fontSize: "30px",
-        marginLeft: "5%",
-    },
-    SimpleOld: {
-        marginLeft: "5%",
-        fontFamily: "OldEnglish",
-        fontSize: "20px",
-        textAlign: "left",
-    },
-    Li: {
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
-        transitionDuration: "100ms",
-        borderCollapse: "collapse",
-    },
-    Link: {
-        fontFamily: "Gill Sans\", sans-serif",
-        color: "#ad841c",
-        transitionDuration: "1s",
-        textTransform: "none"
-    },
-    BorderText: {
-        // fontFamily: "Gill Sans\", sans-serif",
-        border: "1px solid red",
-        display: "inline",
-        margin: 10
-    },
-    Ul: {
-        // marginLeft: "20%",
-        // marginRight: "20%",
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
-        transitionDuration: "100ms",
-        borderCollapse: "collapse",
-        width: "100%"
-    },
-    Date: {
-        width:"10%",
-        padding: "10px",
-        border: "1px solid gray",
-        color: "#7e92e5",
-        textAlign: "center"
-    }
-}
-
-function Home() {
+export default function Category() {
     const categories = useSelector(state => state.categories);
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
@@ -80,11 +32,11 @@ function Home() {
 
     return (
         <div>
-            <div style={styles.Title}>
+            <div style={stylesHome.SimpleOld}>
                 {categories.category?.name}
             </div>
-            <div style={styles.Simple}>
-                <table style={styles.Ul}>
+            <div>
+                <table style={stylesHome.Ul}>
                     <tbody>
                         {categories.category?.Articles?.map(i => (
                             <tr key={i.id}>
@@ -102,11 +54,11 @@ function Home() {
                                         </OneTimeButton>
                                     </td>
                                 }
-                                <td style={styles.Li}>
+                                <td style={stylesHome.Li}>
                                     <Button
                                         fullWidth
                                         onClick={()=>{navigate(`/articles/${i.id}`)}}
-                                        style={styles.Link}
+                                        style={stylesHome.Link}
                                         onMouseEnter={changeBackground}
                                         onMouseLeave={changeBackgroundBack}
                                     >
@@ -116,7 +68,7 @@ function Home() {
                                 <td style={{width:"30%", border: "1px solid gray"}}>
                                     <cite style={{padding:10}}>{i.brief}</cite>
                                 </td>
-                                <td style={styles.Date}>
+                                <td style={stylesHome.Date}>
                                     {(new Date(i.createdAt)).toLocaleDateString()}
                                 </td>
                             </tr>
@@ -127,5 +79,3 @@ function Home() {
         </div>
     );
 }
-
-export default Home;

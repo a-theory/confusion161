@@ -9,7 +9,6 @@ import {Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
 import {useSelector} from "react-redux";
 import {Autocomplete} from "@mui/lab";
-import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = rr.useDispatch();
@@ -53,7 +52,7 @@ function Create() {
 
     return (
         <div style={styleAuth.Div}>
-            <h2 style={styleAuth.Title}>Create a new article</h2>
+            <h2 style={styleAuth.Title}>New article</h2>
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <CustomInput onChange={onChangeName} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeBrief} required placeholder={'brief'}/>

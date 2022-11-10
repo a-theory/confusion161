@@ -84,13 +84,14 @@ const slice = createSlice({
             state.accessToken = localStorage.getItem('accessToken');
             state.refreshToken = localStorage.getItem('refreshToken');
             state.userId = localStorage.getItem('userId');
+            toast.success("Login");
         })
         builder.addCase(sendLogout.fulfilled, (state, action) => {
             state.user = null;
             state.userId = null;
             state.accessToken = null;
             state.refreshToken = null;
-            toast.success("Log out");
+            toast.success("Logout");
             localStorage.removeItem('accessToken');
             localStorage.removeItem('refreshToken');
             localStorage.removeItem('userId');
@@ -98,15 +99,21 @@ const slice = createSlice({
         builder.addCase(sendGetGpg.fulfilled, (state, action) => {
             state.gpg = action.payload.gpg;
         })
-        builder.addCase(sendRegister.fulfilled, (state, action) => {})
+        builder.addCase(sendRegister.fulfilled, (state, action) => {
+            toast.success("Registered");
+        })
         builder.addCase(sendGetRequests.fulfilled, (state, action) => {
             state.users = action.payload.users;
         })
         builder.addCase(sendGetUsers.fulfilled, (state, action) => {
             state.users = action.payload.users;
         })
-        builder.addCase(sendDelete.fulfilled, (state, action) => {})
-        builder.addCase(sendEmailVerify.fulfilled, (state, action) => {})
+        builder.addCase(sendDelete.fulfilled, (state, action) => {
+            toast.success("Deleted");
+        })
+        builder.addCase(sendEmailVerify.fulfilled, (state, action) => {
+            toast.success("Verified");
+        })
     }
 })
 

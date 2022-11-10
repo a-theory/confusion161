@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {asyncRequest} from "../utils/asyncRequest";
+import {toast} from "react-toastify";
 
 export const sendList = asyncRequest(
     'categories/sendList',
@@ -47,8 +48,12 @@ const slice = createSlice({
             state.categories = action.payload.categories;
             state.category = null;
         })
-        builder.addCase(sendCreate.fulfilled, (state, action) => {})
-        builder.addCase(sendDelete.fulfilled, (state, action) => {})
+        builder.addCase(sendCreate.fulfilled, (state, action) => {
+            toast.success("Created");
+        })
+        builder.addCase(sendDelete.fulfilled, (state, action) => {
+            toast.success("Deleted");
+        })
     }
 })
 

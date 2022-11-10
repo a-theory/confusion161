@@ -5,75 +5,7 @@ import {sendList} from "../../redux/modules/categories";
 import {Button, ButtonBase} from "@mui/material";
 import {sendDelete} from "../../redux/modules/categories";
 import {OneTimeButton} from "../utils/custom";
-
-let styles = {
-    Title: {
-        textAlign: "left",
-        fontSize: "40px",
-        marginLeft: "5%",
-        fontFamily: "Entanglement",
-        color: "#7e92e5"
-    },
-    SimpleOld: {
-        marginTop: "5%",
-        marginLeft: "5%",
-        fontFamily: "OldEnglish",
-        fontSize: "20px",
-        textAlign: "left",
-    },
-    Email: {
-        fontFamily: "OldEnglish",
-        marginLeft: "5%",
-        color: "#37561d",
-        fontSize: "20px",
-        textAlign: "left"
-    },
-    Bio: {
-        marginLeft: "10%",
-        color: "gray",
-        fontSize: "20px",
-        textAlign: "left",
-    },
-    Li: {
-        // display: "inline-block",
-        // border: "1px solid white",
-        // position: "relative",
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
-        width: "60%",
-        transitionDuration: "100ms",
-        borderCollapse: "collapse",
-    },
-    Link: {
-        fontFamily: "Gill Sans\", sans-serif",
-        color: "#ad841c",
-        transitionDuration: "1s",
-        textAlign: "left",
-        textTransform: "none"
-    },
-    BorderText: {
-        // fontFamily: "Gill Sans\", sans-serif",
-        // borderBottom: "1px solid red",
-        boxShadow: '0 4px 2px -2px #a22929',
-        display: "inline",
-        marginRight: 10,
-        marginLeft: 10,
-    },
-    Ul: {
-        // marginLeft: "20%",
-        // marginRight: "20%",
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
-        transitionDuration: "100ms",
-        borderCollapse: "collapse",
-        width: "100%"
-    },
-    Img: {
-        width: "100%",
-        position: "absolute",
-        // right: "5%",
-    }
-}
+import {stylesHome} from "../../styles/main";
 
 function Home() {
     const categories = useSelector(state => state.categories);
@@ -98,30 +30,30 @@ function Home() {
 
     return (
         <div>
-            <div style={styles.Title}>Confusion161</div>
-            <Link style={styles.Email} to={"getGpg"}>
+            <div style={stylesHome.Title}>Confusion161</div>
+            <Link style={stylesHome.Email} to={"getGpg"}>
                 gpg only
             </Link>
-            <div style={styles.SimpleOld}>
+            <div style={stylesHome.SimpleOld}>
                 Abstract
             </div>
-            <div style={styles.Bio}>
+            <div style={stylesHome.Bio}>
                 <p style={{color: "#a22929"}}>Key Words:</p>
                 <div style={{width: "80%"}}>
                     [
-                    [<p style={styles.BorderText}>security</p>],
-                    [<p style={styles.BorderText}>cyber world</p>],
-                    [<p style={styles.BorderText}>information technologies</p>],
-                    [<p style={styles.BorderText}>news</p>],
-                    [<p style={styles.BorderText}>law</p>]
+                    [<p style={stylesHome.BorderText}>security</p>],
+                    [<p style={stylesHome.BorderText}>cyber world</p>],
+                    [<p style={stylesHome.BorderText}>information technologies</p>],
+                    [<p style={stylesHome.BorderText}>news</p>],
+                    [<p style={stylesHome.BorderText}>law</p>]
                     ]
                 </div>
             </div>
-            <div style={styles.SimpleOld}>
+            <div style={stylesHome.SimpleOld}>
                 Categories
             </div>
             {categories.categories && categories.categories.length !== 0 &&
-                <table style={styles.Ul}>
+                <table style={stylesHome.Ul}>
                     <tbody>
                         {categories.categories.map(i => (
                             <tr  key={i.id}>
@@ -138,9 +70,9 @@ function Home() {
                                         </OneTimeButton>
                                     </td>
                                 }
-                                <td style={styles.Li}>
+                                <td style={stylesHome.Li}>
                                     <Button onClick={()=>{navigate(`/categories/${i.id}`)}}
-                                                style={styles.Link}
+                                                style={stylesHome.Link}
                                                 onMouseEnter={changeBackground}
                                                 onMouseLeave={changeBackgroundBack}
                                                 fullWidth

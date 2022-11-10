@@ -42,7 +42,9 @@ export const CustomInput = styled(InputBase)(({ theme }) => ({
 
 export const styleAuth = {
     Title: {
-        color: "#a2a2a2"
+        fontSize: "30px",
+        fontFamily: "OldEnglish",
+        color: "#7e92e5"
     },
     Div: {
         width: '320px',
@@ -101,67 +103,73 @@ export const styleToolbar = {
     },
 }
 
-export const stylesCart = {
-    root: {
-        marginLeft: '20px',
-        marginRight: '20px',
-        boxShadow: "2px 3px 10px black, 0 0 10px #a2a2a2 inset",
-        background: 'rgba(0,30,60,0)',
-        border: "1px solid #a2a2a2",
-        borderRadius: 10
+export const stylesHome = {
+    Title: {
+        textAlign: "left",
+        fontSize: "40px",
+        marginLeft: "5%",
+        fontFamily: "Entanglement",
+        // color: "#7e92e5"
     },
-    link: {
-        textDecoration: 'none',
-        color: 'white',
+    SimpleOld: {
+        marginTop: 20,
+        marginLeft: 20,
+        fontFamily: "OldEnglish",
+        fontSize: "20px",
+        textAlign: "left",
+        color: "#7e92e5"
+    },
+    Email: {
+        fontFamily: "OldEnglish",
+        marginLeft: "5%",
+        color: "#37561d",
+        fontSize: "20px",
+        textAlign: "left"
+    },
+    Bio: {
+        marginLeft: "10%",
+        color: "gray",
+        fontSize: "20px",
+        textAlign: "left",
+        marginBottom: 50
+    },
+    Li: {
+        borderBottom: "1px dashed white",
+        borderTop: "1px dashed white",
+        width: "60%",
+        transitionDuration: "100ms",
+        borderCollapse: "collapse",
+    },
+    Link: {
+        fontFamily: "Andale Mono, AndaleMono, monospace",
+        color: "#ad841c",
+        transitionDuration: "1s",
+        textAlign: "left",
+        textTransform: "none",
+        fontSize: "medium"
+    },
+    BorderText: {
+        boxShadow: '0 4px 2px -2px #a22929',
+        display: "inline",
+        marginRight: 10,
+        marginLeft: 10,
+    },
+    Ul: {
+        borderBottom: "1px dashed white",
+        borderTop: "1px dashed white",
+        transitionDuration: "100ms",
+        borderCollapse: "collapse",
+        width: "100%"
+    },
+    Img: {
         width: "100%",
-        height: "100%",
-        textTransform: "none"
+        position: "absolute",
     },
-    text: {
-        color: "#a2a2a2",
-        textAlign: "justify",
-        lineHeight: "25px",
-        outline: 0,
-        fontSize: 18,
-        textOverflow: 'ellipsis',
-    },
-    textBlue: {
-        fontFamily: "'Shadows Into Light', cursive",
-        color: "rgb(51, 153, 255)",
-        textAlign: "justify",
-        lineHeight: "25px",
-        outline: 0,
-        fontSize: 18,
-        textOverflow: 'ellipsis',
-        margin: 0,
-    },
-    cardActions: {
-        width: '100%',
-        margin: "auto",
-        // marginLeft: 3,
-        // marginRight: 3,
-        border: "1px solid rgb(51, 153, 255)",
-        boxShadow: "2px 3px 10px black, 0 0 10px rgb(51, 153, 255) inset",
-        borderRadius: 10
-    },
-    titleText: {
-        color: "#a2a2a2",
-        fontSize: 25,
-        fontFamily: "blud"
-    },
-    up: {
-        margin: "auto",
-        width: "300px",
-        // borderRight: "0.1px solid yellow",
-        borderLeft: "2px solid yellow",
-        height: 40
-    },
-    menu: {
-        color: "#a2a2a2",
-        background: "rgba(0,0,0,0)",
-        maxHeight: 20 * 4.5,
-        // border: "0.1px solid yellow",
-        boxShadow: "2px 3px 10px black, 0 0 10px rgb(51, 153, 255) inset",
-        // width: 100,
+    Date: {
+        width:"10%",
+        padding: "10px",
+        border: "1px solid gray",
+        color: "#7e92e5",
+        textAlign: "center"
     }
-};
+}

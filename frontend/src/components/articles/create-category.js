@@ -27,7 +27,7 @@ function Create() {
 
     return (
         <div style={styleAuth.Div}>
-            <h2 style={styleAuth.Title}>Create a new category</h2>
+            <h2 style={styleAuth.Title}>New category</h2>
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <CustomInput onChange={onChangeName} required placeholder={'name'}/>
                 <CustomInput onChange={onChangeBrief} required placeholder={'brief'}/>

@@ -33,7 +33,7 @@ function Create() {
 
     return (
         <div style={styleAuth.Div}>
-            <h2 style={styleAuth.Title}>Upload a new image</h2>
+            <h2 style={styleAuth.Title}>New image</h2>
             <form onSubmit={handleSubmit} style={styleAuth.Form}>
                 <div style={{display: "flex"}}>
                     <Button

@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import {asyncRequest} from "../utils/asyncRequest";
+import {toast} from "react-toastify";
 
 export const sendList = asyncRequest(
     'articles/sendList',
@@ -60,11 +61,16 @@ const slice = createSlice({
             state.article = null;
             state.articles = action.payload;
         })
-        builder.addCase(sendCreate.fulfilled, (state, action) => {})
+        builder.addCase(sendCreate.fulfilled, (state, action) => {
+            toast.success("Created");
+        })
         builder.addCase(sendUploadImage.fulfilled, (state, action) => {
             state.url = action.payload.url;
+            toast.success("Image uploaded");
         })
-        builder.addCase(sendDelete.fulfilled, (state, action) => {})
+        builder.addCase(sendDelete.fulfilled, (state, action) => {
+            toast.success("Deleted");
+        })
     }
 })
 
