@@ -6,8 +6,10 @@ import {Button, ButtonBase} from "@mui/material";
 import {sendDelete} from "../../redux/modules/categories";
 import {OneTimeButton} from "../utils/custom";
 import {stylesHome} from "../../styles/main";
+import {useWindowDimensions} from "../../utils/windowDimensions"
 
 function Home() {
+    const { width } = useWindowDimensions();
     const categories = useSelector(state => state.categories);
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
@@ -80,9 +82,11 @@ function Home() {
                                         {i.name}
                                     </Button>
                                 </td>
-                                <td style={{width:"30%", border: "1px solid gray"}}>
-                                    <cite style={{padding:10}}> ({i.brief})</cite>
-                                </td>
+                                {width > 800 &&
+                                    <td style={{width:"30%", border: "1px solid gray"}}>
+                                        <cite style={{padding:10}}> ({i.brief})</cite>
+                                    </td>
+                                }
                             </tr>
                         ))}
                     </tbody>

@@ -134,8 +134,8 @@ export const stylesHome = {
         marginBottom: 50
     },
     Li: {
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
+        borderBottom: "1px dashed #ad841c",
+        borderTop: "1px dashed #ad841c",
         width: "60%",
         transitionDuration: "100ms",
         borderCollapse: "collapse",
@@ -155,8 +155,6 @@ export const stylesHome = {
         marginLeft: 10,
     },
     Ul: {
-        borderBottom: "1px dashed white",
-        borderTop: "1px dashed white",
         transitionDuration: "100ms",
         borderCollapse: "collapse",
         width: "100%"

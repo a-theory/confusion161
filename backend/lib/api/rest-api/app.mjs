@@ -8,18 +8,9 @@ import bodyParser from 'body-parser';
 import adminRotes    from './admin/router.mjs';
 import path from "path";
 import helmet from "helmet";
+import expressWinston from 'express-winston';
 import winston from 'winston';
 import useragent from 'express-useragent';
-
-const logger = winston.createLogger({
-    level: 'info',
-    format: winston.format.json(),
-    defaultMeta: { service: 'user-service' },
-    transports: [
-        new winston.transports.File({ filename: './log/error.log', level: 'error' }),
-        new winston.transports.File({ filename: './log/combined.log' }),
-    ],
-});
 
 const promisify = bluebird.promisifyAll;
 
@@ -37,7 +28,21 @@ export function init({ sequelize }) {
     app.use(useragent.express());
     app.use('/storage', express.static('storage'));
 
+    app.use(expressWinston.logger({
+        transports: [
+            new winston.transports.File({ filename: './log/combined.log' }),
+        ],
+        format: winston.format.json()
+    }));
+
     app.use('/api/v1',  adminRotes({ sequelize }));
+
+    app.use(expressWinston.errorLogger({
+        transports: [
+            new winston.transports.File({ filename: './log/error.log' }),
+        ],
+        format: winston.format.json()
+    }));
 
     return app;
 }
@@ -50,12 +55,6 @@ export function start({ appPort, secure }) {
     });
 
     server.closeAsync = promisify(server.close);
-
-    if (secure) {
-        logger.add(new winston.transports.Console({
-            format: winston.format.simple(),
-        }));
-    }
 }
 
 export async function stop() {

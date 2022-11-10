@@ -7,8 +7,10 @@ import {useParams} from "react-router-dom";
 import {Button} from "@mui/material";
 import {OneTimeButton} from "../utils/custom";
 import {stylesHome} from "../../styles/main";
+import {useWindowDimensions} from "../../utils/windowDimensions";
 
 export default function Category() {
+    const { width } = useWindowDimensions();
     const categories = useSelector(state => state.categories);
     const users = useSelector(state => state.users);
     const dispatch = useDispatch();
@@ -65,9 +67,11 @@ export default function Category() {
                                         {i.name}
                                     </Button>
                                 </td>
-                                <td style={{width:"30%", border: "1px solid gray"}}>
-                                    <cite style={{padding:10}}>{i.brief}</cite>
-                                </td>
+                                {width > 800 &&
+                                    <td style={{width:"30%", border: "1px solid gray"}}>
+                                        <cite style={{padding:10}}>{i.brief}</cite>
+                                    </td>
+                                }
                                 <td style={stylesHome.Date}>
                                     {(new Date(i.createdAt)).toLocaleDateString()}
                                 </td>
