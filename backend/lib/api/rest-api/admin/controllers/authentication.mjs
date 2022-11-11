@@ -9,7 +9,7 @@ export default {
         ...req.query,
         ...req.params,
         ...req.body,
-        useragent: req.useragent,
+        useragent: req.headers["user-agent"],
     })),
     logout       : makeUseCaseRunner(Logout, (req, res) => ({
         userData: req.userData,

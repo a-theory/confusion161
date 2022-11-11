@@ -1,4 +1,3 @@
-import jwt from 'jsonwebtoken';
 import argon2  from 'argon2';
 import { v4 as uuidv4 } from 'uuid';
 import User         from '../../domain-model/users.mjs';

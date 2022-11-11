@@ -8,9 +8,7 @@ import bodyParser from 'body-parser';
 import adminRotes    from './admin/router.mjs';
 import path from "path";
 import helmet from "helmet";
-import expressWinston from 'express-winston';
-import winston from 'winston';
-import useragent from 'express-useragent';
+import responseTime from "response-time";
 
 const promisify = bluebird.promisifyAll;
 
@@ -19,30 +17,18 @@ const app = express();
 let server = null;
 
 export function init({ sequelize }) {
+    app.set('trust proxy', true)
+
     app.use(cors());
     app.use(express.static('public'));
     app.use(bodyParser.urlencoded({ extended: false }));
     app.use(bodyParser.json());
     app.use(express.json());
     app.use(helmet());
-    app.use(useragent.express());
+    app.use(responseTime());
     app.use('/storage', express.static('storage'));
 
-    app.use(expressWinston.logger({
-        transports: [
-            new winston.transports.File({ filename: './log/combined.log' }),
-        ],
-        format: winston.format.json()
-    }));
-
     app.use('/api/v1',  adminRotes({ sequelize }));
-
-    app.use(expressWinston.errorLogger({
-        transports: [
-            new winston.transports.File({ filename: './log/error.log' }),
-        ],
-        format: winston.format.json()
-    }));
 
     return app;
 }

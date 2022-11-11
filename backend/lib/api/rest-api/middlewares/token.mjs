@@ -60,7 +60,7 @@ async function tokenDecryption(req, res, isAccess) {
         include: [{
             model: Keys,
             where: {
-                useragent: JSON.stringify(req.useragent)
+                useragent: req.headers['user-agent']
             }
         }]
     });
@@ -82,7 +82,7 @@ async function tokenDecryption(req, res, isAccess) {
     return {token, key: conf, user: user}
 }
 
-function getToken(req) {
+export function getToken(req) {
     if (req.headers.authorization && req.headers.authorization.split(" ")[0] === "Bearer") {
         return req.headers.authorization.split(" ")[1];
     }

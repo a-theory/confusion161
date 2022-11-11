@@ -20,7 +20,7 @@ export default class refresh extends Base {
         const accessToken = await jwt.sign(
             { id: userData.id },
             config.accessTokenKey,
-            { expiresIn: '1m' }
+            { expiresIn: '3m' }
         );
         const keyAccessToken = crypto.randomBytes(32);
         const encryptedAccessToken = encryptAES(accessToken, keyAccessToken)

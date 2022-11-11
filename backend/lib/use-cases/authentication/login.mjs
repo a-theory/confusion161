@@ -40,7 +40,7 @@ export default class login extends Base {
         const accessToken = await jwt.sign(
             { id: user.id },
             config.accessTokenKey,
-            { expiresIn: '1m' }
+            { expiresIn: '3m' }
         );
         const keyAccessToken = crypto.randomBytes(32);
         const encryptedAccessToken = encryptAES(accessToken, keyAccessToken)
@@ -56,7 +56,7 @@ export default class login extends Base {
             userId: user.id,
             refresh: keyRefreshToken.toString('hex'),
             access: keyAccessToken.toString('hex'),
-            userAgent: JSON.stringify(useragent)
+            userAgent: useragent
         })
 
         return {
