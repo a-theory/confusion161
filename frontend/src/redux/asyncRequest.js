@@ -1,7 +1,7 @@
 import {createAsyncThunk} from "@reduxjs/toolkit";
 import axios from "axios";
 import {toast} from "react-toastify";
-import config from "../../config/config";
+import config from "../config/config";
 
 export function asyncRequest(prefix, method, url) {
     return createAsyncThunk(
@@ -34,13 +34,13 @@ export function asyncRequest(prefix, method, url) {
                     header.headers.Authorization = `Bearer ${resToken.data.accessToken}`
                     const res = await getRes({method, url: correctUrl, data: correctData, header});
                     resData.data = res.data;
+                } else {
+                    errors(err.response.data)
+                    return null;
                 }
-                else toast.error(err.response.data.error);
             }
 
-            if (!errors(resData)){
-                return resData.data;
-            }
+            return resData.data;
         }
     )
 }
@@ -96,17 +96,13 @@ async function getRes({method, url, data, header}){
     throw new Error();
 }
 
-function errors(res) {
-    if (!res?.data?.status){
-        const codes = {
-            TOO_SHORT: 'Password too short'
-        }
+function errors(err) {
+    if (!err?.fields) return;
 
-        if (res.data.error.code === 'FORMAT_ERROR') {
-            toast.error(codes[res.data.error.fields.password]);
-        }
-        return true;
+    for (const property in err.fields){
+        toast.error(`
+            ${property} : ${err.fields[property]}
+        `);
     }
-    return false;
 }
 

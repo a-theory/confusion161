@@ -3,6 +3,7 @@ import Base                from './Base.mjs';
 import argon2 from "argon2";
 import Articles from "./articles.mjs";
 import Keys from "./keys.mjs";
+import {Exception} from "../use-cases/Exception.mjs";
 
 export default class Users extends Base {
     static tableName = 'Users';
@@ -28,37 +29,20 @@ export default class Users extends Base {
     }
 
     static async createUser(params) {
-        const errors = {};
         const email = await this.findOne({ where: { email: params.email } });
+        const errors = {};
 
         if (email) {
             errors.email = 'EMAIL_BUSY';
         }
 
         if (Object.keys(errors).length) {
-            throw errors;
+            throw new Exception({
+                code   : 'CREATE_USER_ERROR',
+                fields :  errors
+            });
         }
 
         return this.create({ ...params });
-    }
-
-    static async updateUser({id, params}){
-        let {password, full_name} = params;
-        const user = await this.findOne({ where: { id: id } });
-        let errors = {};
-
-        let obj = {};
-
-        if (password){
-            obj.password = await argon2.hash(password);
-        }
-
-        if (Object.keys(errors).length){
-            throw errors
-        }
-
-        const userUpdate = await user.update({...obj});
-
-        return {user: userUpdate, updateData: {password, full_name}};
     }
 }

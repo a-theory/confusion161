@@ -3,10 +3,10 @@ import argon2  from 'argon2';
 import User         from '../../domain-model/users.mjs';
 import Base from '../../use-cases/Base.mjs';
 import config from '#global-config' assert {type: 'json'};
-import pad from "one-time-pad";
 import crypto from 'crypto'
 import Keys from "../../domain-model/keys.mjs";
 import {encryptAES} from "../utils/encryption.mjs";
+import {Exception} from "../Exception.mjs";
 
 export default class login extends Base {
     async validate(data = {}) {
@@ -22,26 +22,38 @@ export default class login extends Base {
     async execute({ email, password, useragent }) {
         const user = await User.findOne({ where: { email } });
 
+        if (!user){
+            throw new Exception({
+                code   : 'LOGIN_ERROR',
+                fields : {email: "user is not found"}
+            })
+        }
+
         const prevKeys = await Keys.findOne({where: {userId: user.id}});
         if (prevKeys){
-            throw new Error("user already registered")
+            throw new Exception({
+                code   : 'LOGIN_ERROR',
+                fields : {token: "user is busy"}
+            })
         }
 
         const errors = {};
-
-        if (!user) throw ({ email: 'EMAIL_NOT_EXIST' });
         const isVerified = await argon2.verify(user.password, password);
-
-        if (!isVerified) errors.password = 'INCORRECT_PASSWORD';
-        if (user.status === 'UNVERIFIED') errors.error = 'UNVERIFIED_USER';
+        if (!isVerified) errors.password = 'incorrect passport';
+        if (user.status === 'UNVERIFIED') errors.user_unverified = 'unverified user';
         if (Object.keys(errors).length) {
-            throw errors;
+            throw new Exception({
+                code   : 'LOGIN_ERROR',
+                fields :  errors
+            })
         }
+
         const accessToken = await jwt.sign(
             { id: user.id },
             config.accessTokenKey,
             { expiresIn: '3m' }
         );
+
         const keyAccessToken = crypto.randomBytes(32);
         const encryptedAccessToken = encryptAES(accessToken, keyAccessToken)
 

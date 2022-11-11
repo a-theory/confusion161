@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {asyncRequest} from "../utils/asyncRequest";
+import {asyncRequest} from "../asyncRequest";
 import {toast} from "react-toastify";
 
 export const sendList = asyncRequest(
