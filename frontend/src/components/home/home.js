@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {useNavigate, Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
-import {Button, ButtonBase} from "@mui/material";
+import {Button} from "@mui/material";
 import {sendDelete} from "../../redux/modules/categories";
 import {OneTimeButton} from "../utils/custom";
 import {stylesHome} from "../../styles/main";

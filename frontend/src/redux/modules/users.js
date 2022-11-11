@@ -65,6 +65,7 @@ const initialState = {
     userId: localStorage.getItem('userId'),
     gpg: null,
     user: null,
+    users: [],
     count: 1,
     page: 1,
 };

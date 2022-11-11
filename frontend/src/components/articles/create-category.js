@@ -2,17 +2,13 @@ import React, {useState} from "react";
 import {Button} from "@mui/material";
 import {styleAuth, CustomInput} from "../../styles/main"
 import {sendCreate} from "../../redux/modules/categories";
-import {Link, useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {useDispatch} from "react-redux";
-import * as rr from "react-redux";
-import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = useDispatch();
-    const users = rr.useSelector(state => state.users);
     const [name, setName] = useState('');
     const [brief, setBrief] = useState('');
-    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();

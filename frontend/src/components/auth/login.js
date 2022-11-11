@@ -1,22 +1,18 @@
-import React from "react";
+import React, {useState} from "react";
 import {Button} from "@mui/material";
 import {styleAuth, CustomInput} from "../../styles/main"
 import {sendLogin} from "../../redux/modules/users";
 import {useDispatch} from "react-redux";
-import * as rd from "react-router-dom";
-import * as r from "react";
 import {useTranslation} from 'react-i18next'
 import {Link} from "react-router-dom";
-import {OneTimeButton} from "../utils/custom";
 const Tr = useTranslation;
 
 function Login() {
     const {t} = Tr();
     const dispatch = useDispatch();
 
-    const [email, setEmail] = r.useState('');
-    const [password, setPassword] = r.useState('');
-    const navigate = rd.useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();

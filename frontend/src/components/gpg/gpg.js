@@ -1,7 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import {sendGetGpg} from "../../redux/modules/users";
-import {Button} from "@mui/material";
+import {OneTimeButton} from "../utils/custom";
 
 let styles = {
     Title: {
@@ -15,7 +15,6 @@ let styles = {
 function Home() {
     const gpg = useSelector(state => state.users.gpg);
     const dispatch = useDispatch();
-    const [isPushed, setIsPushed] = useState(false);
 
     useEffect(() => {
         dispatch(sendGetGpg())
@@ -23,7 +22,6 @@ function Home() {
 
     const handleCope = () => {
         navigator.clipboard.writeText(gpg.join('\n'))
-        setIsPushed(true)
     }
 
     return (
@@ -38,14 +36,9 @@ function Home() {
                     ***<br/>
                     -----END PGP PUBLIC KEY BLOCK-----<br/>
                 </div>
-                <Button style={{marginLeft: "5%"}} onClick={handleCope} variant='outlined'>
-                    {!isPushed &&
-                        <div>copy</div>
-                    }
-                    { isPushed &&
-                        <b>coped ✅</b>
-                    }
-                </Button>
+                <OneTimeButton style={{marginLeft: "5%"}} onClick={handleCope} variant='outlined'>
+                    <div>copy</div>
+                </OneTimeButton>
             </div>
         </div>
     );

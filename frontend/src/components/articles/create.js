@@ -1,52 +1,42 @@
-import React, {useEffect} from "react";
-import {Button, TextField, Typography} from "@mui/material";
+import React, {useEffect, useState} from "react";
+import {Button, TextField, Autocomplete} from "@mui/material";
 import {styleAuth, CustomInput} from "../../styles/main"
 import {sendCreate} from "../../redux/modules/articles";
-import * as rr from "react-redux";
-import * as rd from "react-router-dom";
-import * as r from "react";
 import {Link} from "react-router-dom";
 import {sendList} from "../../redux/modules/categories";
-import {useSelector} from "react-redux";
-import {Autocomplete} from "@mui/lab";
+import {useDispatch, useSelector} from "react-redux";
 
 function Create() {
-    const dispatch = rr.useDispatch();
-    const users = rr.useSelector(state => state.users);
+    const dispatch = useDispatch();
     const categories = useSelector(state => state.categories);
 
-    const [name, setName] = r.useState('');
-    const [brief, setBrief] = r.useState('');
-    const [pdf, setPdf] = r.useState(null);
-    const [Categories, setCategories] = r.useState([]);
-    const navigate = rd.useNavigate();
+    const [name, setName] = useState('');
+    const [brief, setBrief] = useState('');
+    const [html, setHtml] = useState(null);
+    const [Categories, setCategories] = useState([]);
 
     useEffect(() => {
-        if (categories.status === 'idle'){
-            dispatch(sendList())
-        }
-    },[dispatch])
+        dispatch(sendList())
+    },[])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         dispatch(sendCreate({
-            ids:[],
             categories:Categories,
             name,
             brief,
-            file: pdf,
+            file: html,
         }));
     };
 
     const onChangeName = (e) => setName(e.target.value);
     const onChangeBrief = (e) => setBrief(e.target.value);
-    const onChangePdf = (e) => setPdf(e.target.files[0]);
+    const onChangePdf = (e) => setHtml(e.target.files[0]);
     const onChangeCategories = (event, newValues) => {
         let arr = []
         for (let i = 0; i < newValues.length; i++){
             arr.push(newValues[i].id)
         }
-        // const json = JSON.stringify();
         setCategories(arr);
     };
 
@@ -60,7 +50,7 @@ function Create() {
                     variant="outlined"
                     component="label"
                 >
-                    {pdf ? <div>{pdf.name}</div>:<div>Upload File</div>}
+                    {html ? <div>{html.name}</div>:<div>Upload File</div>}
                     <input
                         type="file"
                         accept="text/html"
@@ -80,7 +70,7 @@ function Create() {
                             {...params}
                             variant="outlined"
                             label="categories"
-                            placeholder="category"
+                            placeholder="add category"
                         />
                     )}
                 />

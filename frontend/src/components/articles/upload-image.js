@@ -8,11 +8,9 @@ import {OneTimeButton} from "../utils/custom";
 
 function Create() {
     const dispatch = useDispatch();
-    const users = useSelector(state => state.users);
     const articles = useSelector(state => state.articles);
 
     const [image, setImage] = useState(null);
-    const [isPushed, setIsPushed] = useState(false);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -23,12 +21,11 @@ function Create() {
 
     const onChangeImage = (e) => {
         setImage(e.target.files[0])
-        setIsPushed(false);
         dispatch(cleanUrl());
     };
+
     const handleCope = () => {
         navigator.clipboard.writeText(articles.url)
-        setIsPushed(true);
     }
 
     return (

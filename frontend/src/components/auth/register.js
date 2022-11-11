@@ -1,24 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import {sendRegister} from "../../redux/modules/users";
-import * as rr from "react-redux";
-import * as rd from "react-router-dom";
-import * as r from "react";
-import {Button, Tabs, Tab} from "@mui/material";
+import {Button} from "@mui/material";
 import {styleAuth, CustomInput} from "../../styles/main"
 import {useTranslation} from 'react-i18next'
 import {Link} from "react-router-dom";
-import {OneTimeButton} from "../utils/custom";
+import {useDispatch} from "react-redux";
 const Tr = useTranslation;
 
 function Register() {
     const {t} = Tr();
-    const dispatch = rr.useDispatch();
-    const users = rr.useSelector(state => state.users);
+    const dispatch = useDispatch();
 
-    const [name, setName] = r.useState('');
-    const [email, setEmail] = r.useState('');
-    const [password, setPassword] = r.useState('');
-    const navigate = rd.useNavigate();
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -42,27 +37,7 @@ function Register() {
                 Login
             </Link>
             <div style={{marginTop: "5%", textAlign: "left"}}>
-                Person* you = new Person(); <br/>
-                int cnt = you.skills.size(); <br/>
-                vector{"<string>"} reqSkills;<br/>
-                reqSkills.push_back("cyber security");
-                reqSkills.push_back("math");
-                reqSkills.push_back("physics");
-                reqSkills.push_back("laws");
-                reqSkills.push_back("AI");
-                reqSkills.push_back("IT");
-                <p> </p>
-                {"for (int i = 0; i < cnt; i++) {"} <br/>
-                ....for (int j = 0; j {"< reqSkills.size();"} j++) {"{"} <br/>
-                ........if(you.skills[i] == reqSkills[j]) {"{"} <br/>
-                ............cout {"<< \"you are welcome\\n\";"} <br/>
-                ............cout {"<< \"we will contact you\\n\";"} <br/>
-                ............return 0; <br/>
-                ........{"}"} <br/>
-                ....{"}"} <br/>
-                <p> </p>
-                cout {"<< \"you have to learn a bit and after you can try\" << endl;"} <br/>
-                return 1;
+                Person* you = new Person();
             </div>
         </div>
     );
