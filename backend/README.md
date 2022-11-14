@@ -15,5 +15,3 @@
 
 `OAuth2.1` `Unique AES key for each token` `Desentralisation of tokens`
 `Argon2` `Winston logger` `Helmet` `Safe-buffer`
-
-![](../../Screenshot 2022-11-14 at 00.50.27.png)
