@@ -4,6 +4,7 @@ import App from './App';
 import { Provider } from "react-redux";
 import { createRoot } from 'react-dom/client';
 import { ToastContainer } from 'react-toastify';
+import DOMPurify from 'dompurify';
 
 import 'react-toastify/dist/ReactToastify.css';
 
@@ -19,10 +20,18 @@ const loadingMarkup = (
 )
 
 function main(){
+    // const sanitizedApp=DOMPurify.sanitize(
+    //     `
+    //     <App/>
+    //     `
+    // )
+
     root.render(
         // <StrictMode>
             <Suspense fallback={loadingMarkup}>
                 <Provider store={store}>
+                    {/*<div dangerouslySetInnerHTML={{__html: sanitizedApp}}>*/}
+                    {/*</div>*/}
                     <App/>
                     <ToastContainer theme="colored" />
                 </Provider>

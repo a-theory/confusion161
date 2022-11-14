@@ -9,6 +9,14 @@ import adminRotes    from './admin/router.mjs';
 import path from "path";
 import helmet from "helmet";
 import responseTime from "response-time";
+import rateLimit from 'express-rate-limit'
+
+const limiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+    standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+    legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+})
 
 const promisify = bluebird.promisifyAll;
 
@@ -26,6 +34,7 @@ export function init({ sequelize }) {
     app.use(express.json());
     app.use(helmet());
     app.use(responseTime());
+    app.use(limiter)
     app.use('/storage', express.static('storage'));
 
     app.use('/api/v1',  adminRotes({ sequelize }));

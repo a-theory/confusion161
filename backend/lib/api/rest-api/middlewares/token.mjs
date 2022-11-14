@@ -3,6 +3,7 @@ import Users from "../../../domain-model/users.mjs";
 import config from '#global-config' assert {type: 'json'};
 import {decryptAES} from "../../../use-cases/utils/encryption.mjs";
 import Keys from "../../../domain-model/keys.mjs";
+import {Buffer} from "safe-buffer";
 
 export async function validateAccessToken(req, res, next) {
     await validateToken(req, res, next, true);
