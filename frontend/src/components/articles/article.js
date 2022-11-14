@@ -3,12 +3,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {sendGetOne} from "../../redux/modules/articles";
 import {useParams} from "react-router-dom";
 import {useWindowDimensions} from "../../utils/windowDimensions";
+import DOMPurify from 'dompurify';
 
 function Home() {
     const articles = useSelector(state => state.articles);
     const dispatch = useDispatch();
     const id = useParams().id;
     const { width } = useWindowDimensions();
+
+    const sanitizedHtml=DOMPurify.sanitize(articles?.html)
 
     const styles = {
         color: "#6d7ab0",
@@ -28,10 +31,11 @@ function Home() {
     },[])
 
     return (
+
         <div
             style={styles}
             dangerouslySetInnerHTML={{
-                __html: articles?.html
+                __html: sanitizedHtml
             }}>
         </div>
     )
