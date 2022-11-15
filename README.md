@@ -11,9 +11,8 @@ Also, I add some privacy: each Readme provides more information
 about it.
 
 `to start: `
-1. cd frontend && npm start
-2. create DB (check ./backend/config/db.json)
-3. cd backend && npm db:migrate && npm start
+1. start frontend app 
+2. start backend app
 
 🔥 `also check `
 
