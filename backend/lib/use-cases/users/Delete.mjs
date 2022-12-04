@@ -12,11 +12,12 @@ export default class Update extends Base {
 		return this.doValidation(data, rules);
 	}
 	async execute({ userData, id }) {
-		return User.destroy({
+		await User.destroy({
 			where: {
 				id: id,
 			}
-		});
+		})
+		return {};
 	}
 }
 

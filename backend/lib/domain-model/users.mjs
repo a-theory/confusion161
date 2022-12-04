@@ -1,6 +1,5 @@
 import { DataTypes as DT }     from 'sequelize';
-import Base                from './Base.mjs';
-import argon2 from "argon2";
+import Base from "./Base.mjs";
 import Articles from "./articles.mjs";
 import Keys from "./keys.mjs";
 import {Exception} from "../use-cases/Exception.mjs";

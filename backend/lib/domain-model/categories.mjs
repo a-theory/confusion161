@@ -1,4 +1,4 @@
-import Base from "./base.mjs";
+import Base from "./Base.mjs";
 import Articles from "./articles.mjs";
 import { DataTypes as DT }     from 'sequelize';
 

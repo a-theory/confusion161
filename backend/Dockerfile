@@ -1,13 +1,14 @@
-FROM node:16.13.1
+FROM node:18.11.0
 
 # create root application folder
 WORKDIR /app
 
-# copy configs to /app folder
-COPY package*.json ./
-# copy source code to /app/src folder
-COPY lib /app/lib
+# copy source code to /app folder
+COPY . ./
 
 RUN npm install
 
-EXPOSE 5001
+
+EXPOSE 8080
+
+CMD [ "npm", "start" ]

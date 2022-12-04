@@ -6,9 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.mjs",
-    "docker": "docker-compose up -d",
-    "db:migrate": "sequelize db:migrate",
-    "db:migrate:undo": "sequelize db:migrate:undo",
+    "migrate": "npx sequelize db:migrate --env development",
     "test:lint": "eslint lib app.mjs --ext mjs",
     "test:lint:fix": "eslint lib app.mjs --ext mjs --fix"
   },

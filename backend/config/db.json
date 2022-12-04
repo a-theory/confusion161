@@ -1,6 +1,6 @@
 {
   "development": {
-    "username": "filatov",
+    "username": "root",
     "password": "password",
     "database": "mySite",
     "host": "127.0.0.1",

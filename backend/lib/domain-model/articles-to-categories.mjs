@@ -1,4 +1,4 @@
-import Base from "./base.mjs";
+import Base from "./Base.mjs";
 import { DataTypes as DT }     from 'sequelize';
 
 export default class ArticlesToCategories extends Base {
