@@ -3,7 +3,7 @@
     "username": "root",
     "password": "password",
     "database": "mySite",
-    "host": "127.0.0.1",
+    "host": "mysql.default",
     "dialect": "mysql",
     "port": "3306"
   }
