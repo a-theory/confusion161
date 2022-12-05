@@ -6,7 +6,7 @@
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.mjs",
-    "migrate": "npx sequelize db:migrate --env development",
+    "migrate": "npx sequelize db:create;npx sequelize db:migrate;npx sequelize-cli db:seed:all",
     "test:lint": "eslint lib app.mjs --ext mjs",
     "test:lint:fix": "eslint lib app.mjs --ext mjs --fix"
   },
