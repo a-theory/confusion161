@@ -11,8 +11,10 @@ Also, I add some privacy: each Readme provides more information
 about it.
 
 `to start: `
-1. start frontend app 
-2. start backend app
+
+1. configure docker and kubernetes
+2. start frontend app 
+3. start backend app
 
 🔥 `also check `
 
