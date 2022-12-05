@@ -11,7 +11,11 @@ const namespace = cls.createNamespace('sequelize');
 Sequelize.useCLS(namespace);
 
 export function initModels(dbConfig) {
-    const { database, username, password, dialect, host, port } = dbConfig.development;
+    const isDevelopment = process.env.API_MODE === "DEVELOPMENT";
+    const { database, username, password, dialect, host, port } = isDevelopment ? 
+        dbConfig.development
+        : 
+        dbConfig.production;
 
     const sequelize = new Sequelize(database, username, password, {
         host,

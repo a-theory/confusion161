@@ -38,7 +38,7 @@ export default class Create extends Base {
             url: url,
             userId: userData.id,
         });
-
+        categories = JSON.parse(categories);
         if (categories[0].length > 1){
             for (const i of categories){
                 await ArticlesToCategories.create({

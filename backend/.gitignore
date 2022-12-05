@@ -105,4 +105,6 @@ dist
 
 .DS_Store
 
-cert
+certs
+
+package-lock.json

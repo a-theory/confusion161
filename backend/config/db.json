@@ -2,7 +2,15 @@
   "development": {
     "username": "root",
     "password": "password",
-    "database": "mySite",
+    "database": "confusion161",
+    "host": "127.0.0.1",
+    "dialect": "mysql",
+    "port": "3306"
+  },
+  "production": {
+    "username": "root",
+    "password": "password",
+    "database": "confusion161",
     "host": "mysql.default",
     "dialect": "mysql",
     "port": "3306"

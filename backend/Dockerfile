@@ -10,4 +10,4 @@ RUN npm install
 
 EXPOSE 8080
 
-CMD ["/bin/bash", "-c", "npm run migrate;npm start"]
+CMD ["/bin/bash", "-c", "npm run production-db; npm run production-db:migrate; npm run production-db:seed; npm start"]

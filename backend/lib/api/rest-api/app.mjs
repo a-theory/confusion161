@@ -47,6 +47,9 @@ export function start({ appPort, secure }) {
 
     server = securedApp.listen(appPort, () => {
         console.log(`app started on port ${appPort}`);
+        console.log(`app mode ${
+            process.env.API_MODE ? process.env.API_MODE : "PRODUCTION"
+        }`);
     });
 
     server.closeAsync = promisify(server.close);
@@ -62,8 +65,8 @@ export async function stop() {
 
 function useHttps(application) {
     const httpsOptions = {
-        key  : fs.readFileSync(path.join("cert", "key.pem")),
-        cert : fs.readFileSync(path.join("cert", "cert.pem"))
+        key  : fs.readFileSync(path.join("certs", "key.pem")),
+        cert : fs.readFileSync(path.join("certs", "cert.pem"))
     };
 
     return https.createServer(httpsOptions, application);

@@ -37,7 +37,7 @@ function Create() {
         for (let i = 0; i < newValues.length; i++){
             arr.push(newValues[i].id)
         }
-        setCategories(arr);
+        setCategories(JSON.stringify(arr));
     };
 
     return (

@@ -1,8 +1,10 @@
 import config                  from '../config/config.json' assert {type: 'json'}; // eslint-disable-line
 import dbConfig from '../config/db.json ' assert {type: 'json'}; // eslint-disable-line
+import dotenv from "dotenv";
 import * as api                from './api/rest-api/app.mjs';
 import { initModels } from './domain-model/index.mjs';
 import UseCaseBase             from './use-cases/Base.mjs';
+dotenv.config(); 
 
 export default class AppProvider {
     config = null;
