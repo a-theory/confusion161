@@ -50,7 +50,5 @@ spec:
       - name: backend
         image: backend:latest
         imagePullPolicy: Never
-        # command: ["/bin/sh"]
-        # args: ["-c", "npm run migrate && npm start"]
         ports:
         - containerPort: 8080

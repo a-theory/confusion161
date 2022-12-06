@@ -1,12 +1,13 @@
 import Minio from "minio";
 
 export async function initMinio(){
+    const isDevelopment = process.env.API_MODE === "DEVELOPMENT";
     const minioClient = new Minio.Client({
-        endPoint: '127.0.0.1',
+        endPoint: isDevelopment ? '127.0.0.1' : "minio.default",
         port: 9000,
         useSSL: false,
-        accessKey: 'filatov',
-        secretKey: 'A3302003a',
+        accessKey: 'rootuser',
+        secretKey: 'rootpass123',
     });
 
     await minioClient.bucketExists('mysite', function(err, exists) {
