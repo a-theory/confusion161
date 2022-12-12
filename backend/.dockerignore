@@ -1,0 +1,14 @@
+# exclude dot-files (.env, .git, ...)
+.env
+.git
+
+# logs
+log
+*.log
+
+# dependency directory
+node_modules
+
+# dependency files
+package-lock.json
+

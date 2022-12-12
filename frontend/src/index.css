@@ -1,0 +1,28 @@
+body {
+  margin: 0;
+  font-family: Andale Mono, AndaleMono, monospace;
+  background-color: black;
+  color: gray;
+  font-size: medium;
+}
+
+body::before {
+  content: "";
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;
+  background-image: url("../public/brain.png");
+  /*opacity: 0.035;*/
+  opacity: 0.05;
+}
+
+::-moz-selection { /* Code for Firefox */
+  background: #8a1f1f;
+}
+
+::selection {
+  background: #8a1f1f;
+}

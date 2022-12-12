@@ -1,0 +1,15 @@
+.App {
+    /*text-align: center;*/
+}
+
+@font-face {
+    font-family: "OldEnglish";   /*Can be any text*/
+    src: local("AirbnbCerealLight"),
+    url("./fonts/OldEnglish.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Entanglement";   /*Can be any text*/
+    src: local("AirbnbCerealLight"),
+    url("./fonts/Entanglement.ttf") format("truetype");
+}
